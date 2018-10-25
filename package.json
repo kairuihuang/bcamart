@@ -1,0 +1,19 @@
+{
+  "name": "bcamart",
+  "version": "1.0.0",
+  "description": "Simple POS webapp exclusively for BCAMart use",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kairuihuang/bcamart.git"
+  },
+  "author": "Kairui Huang & Jacob Salerno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kairuihuang/bcamart/issues"
+  },
+  "homepage": "https://github.com/kairuihuang/bcamart#readme"
+}
