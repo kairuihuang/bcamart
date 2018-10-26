@@ -14,6 +14,8 @@ const database = firebase.database();
 app.set('view engine', 'pug');
 app.set('views','./views');
 
+app.use('/stylesheets', express.static('public'));
+
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
 });
