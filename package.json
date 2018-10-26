@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/kairuihuang/bcamart/issues"
   },
-  "homepage": "https://github.com/kairuihuang/bcamart#readme"
+  "homepage": "https://github.com/kairuihuang/bcamart#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "firebase": "^5.5.6",
+    "pug": "^2.0.3"
+  }
 }
