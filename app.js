@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 const database = firebase.database();
 
 app.set('view engine', 'pug');
-app.set('pages','./pages');
+app.set('views','./views');
 
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
@@ -20,6 +20,14 @@ app.get('/', (req, res) => {
 
 app.get('/products', (req, res) => {
 	res.render("products");
+});
+
+app.get('/transactions', (req, res) => {
+	res.render("transactions");
+});
+
+app.get('/volunteers', (req, res) => {
+	res.render("volunteers");
 });
 
 // const port = process.env.PORT || 4000;
