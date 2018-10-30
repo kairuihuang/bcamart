@@ -15,12 +15,15 @@ app.set('view engine', 'pug');
 app.set('views','./views');
 
 app.use('/stylesheets', express.static('public'));
+app.use('/scripts', express.static('public'));
+
 
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
 });
 
 app.get('/products', (req, res) => {
+	res.sendFile(__dirname + '/public/scripts/product.js');
 	res.render("products");
 });
 
