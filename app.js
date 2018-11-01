@@ -2,6 +2,10 @@ const firebase = require('firebase');
 const express = require('express');
 const app = express();
 
+const products = require('./products.js');
+const transactions = require('./transactions.js');
+const volunteers = require('./volunteers.js');
+
 const config = {
   apiKey: "AIzaSyCtyH_NnJVubNiJLycE7dcO_svhpCHQf-8",
   authDomain: "database-cdf92.firebaseapp.com",
@@ -11,19 +15,16 @@ const config = {
 firebase.initializeApp(config);
 const database = firebase.database();
 
-app.set('view engine', 'pug');
-app.set('views','./views');
-
-app.use('/stylesheets', express.static('public'));
-app.use('/scripts', express.static('public'));
-
+app.use('/products', products);
+app.use('/transactions', transactions);
+app.use('/volunteers', volunteers);
 
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
 });
 
 app.get('/products', (req, res) => {
-	res.sendFile(__dirname + '/public/scripts/product.js');
+	res.sendFile(__dirname + '/public/scripts/products.js');
 	res.render("products");
 });
 
