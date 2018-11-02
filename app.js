@@ -18,7 +18,7 @@ const database = firebase.database();
 app.set('view engine', 'pug');
 app.set('views','./public/views');
 
-app.use('/stylesheets', express.static('public'));
+app.use(express.static('public'));
 
 app.use('/products', products);
 app.use('/transactions', transactions);
