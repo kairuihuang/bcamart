@@ -11,13 +11,22 @@ const config = {
 };
 
 firebase.initializeApp(config);
-const database = firebase.database();
+
+
 
 router.get('/', (req, res) => {
    res.render('products');
+   console.log('hello');
+   var preObject = Document.getElementById('object');
+
+	var dbRefObject = firebase.database().ref().child('object');
+
+	dbRefObject.on('value', snap => {
+		preObject.innerText = JSON.stringify(snap.val())
+	});
 });
+
+
 //export this router to use in our index.js
 module.exports = router;
 
-var ref = firebase.database().ref("object");
-console.log(ref);
