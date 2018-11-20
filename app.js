@@ -2,7 +2,13 @@ const express = require('express');
 const app = express();
 const firebase = require('firebase');
 
+const config = {
+  apiKey: "AIzaSyCtyH_NnJVubNiJLycE7dcO_svhpCHQf-8",
+  authDomain: "database-cdf92.firebaseapp.com",
+  databaseURL: "https://database-cdf92.firebaseio.com",
+};
 
+firebase.initializeApp(config);
 const database = firebase.database();
 
 app.set('view engine', 'pug');
