@@ -1,10 +1,6 @@
-const firebase = require('firebase');
 const express = require('express');
 const app = express();
-
-const products = require('./products.js');
-const transactions = require('./transactions.js');
-const volunteers = require('./volunteers.js');
+const firebase = require('firebase');
 
 const config = {
   apiKey: "AIzaSyCtyH_NnJVubNiJLycE7dcO_svhpCHQf-8",
@@ -20,14 +16,29 @@ app.set('views','./public/views');
 
 app.use(express.static('public'));
 
-app.use('/products', products);
-app.use('/transactions', transactions);
-app.use('/volunteers', volunteers);
-
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
 });
 
+app.get('/products', (req, res) => {
+	res.render('products');
+});
+
+app.get('/transactions', (req, res) => {
+	res.render('transactions');
+});
+
+app.get('/volunteers', (req, res) => {
+	res.render('volunteers');
+});
+
+/*
+database.ref("/products").set({
+	name: "Jacob",
+	price: 1.00,
+	quantity: 250,
+});
+*/
 
 // const port = process.env.PORT || 4000;
 app.listen(4000, () => {
