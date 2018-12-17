@@ -2,17 +2,20 @@ html
 	head
 		title Products
 		link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="../scripts/products.js")
 	body
-		h1 Item Listing
-		table(style = 'width:100%', border='1')
-			tr
-				th Item
-				th Cost
-				th Price
-				th Margin
-				th Markup
-				th Quantity
-				th TV
+		h1 Hello
+		form(action = "/addProduct" method = "POST")
+			label(for = "name") Name:
+			input(name = "name")
+			label(for = "price") Price:
+			input(name = "price")
+			label(for = "cost") Cost
+			input(name = "cost")
+			label(for = "quantity") Quantity
+			input(name = "quantity")
+			button(type = "submit") Submit
 
 
 
