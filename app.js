@@ -37,25 +37,11 @@ app.get('/loadProducts', (req, res) => {
 	database.ref("/products").once("value").then((snapshot) => {
 		var products = snapshot.val();
 		res.send(products);
-		// for (var i = 0; i < products.length; i++) {
-		// 	console.log(products[i]);
-		// }
 	});
 });
 
-function addProduct (id, name, price, cost, quantity) {
-	// id needs to be tracked
-	database.ref("products/" + id).set({
-		name: name,
-		price: price,
-		cost: cost,
-		quantity: quantity
-	});
-}
-
 app.post('/addProduct', (req, res) => {
 	var reqBody = req.body;
-	console.log(reqBody);
 	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
 	res.redirect("http://localhost:4000/products");
 });
@@ -68,8 +54,29 @@ app.get('/volunteers', (req, res) => {
 	res.render('volunteers');
 });
 
+function addProduct (id, name, price, cost, quantity) {
+	// id needs to be tracked
+	var margin = round((price-cost)/price, 4);
+	var markup = round((price-cost)/cost, 4);
+	var totalVal = round(quantity*cost, 2);
+
+	database.ref("products/" + id).set({
+		name: name,
+		price: price,
+		cost: cost,
+		quantity: quantity,
+		margin: margin,
+		markup: markup,
+		totalValue: totalVal
+	});
+}
+
+function round(value, decimals) {
+	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
+
 /*
-// margin & markup calculated at insertion / modification
 database.ref("/products").set([
 	{
 		name: "Chex Mix",
