@@ -68,6 +68,22 @@ app.get('/volunteers', (req, res) => {
 	res.render('volunteers');
 });
 
+app.post('/addVolunteer', (req, res) => {
+	var reqBody = req.body;
+	console.log(reqBody);
+	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
+	res.redirect("http://localhost:4000/volunteers");
+});
+
+app.get('/loadVolunteers', (req, res) => {
+	database.ref("/volunteers").once("value").then((snapshot) => {
+		var products = snapshot.val();
+		res.send(products);
+		// for (var i = 0; i < products.length; i++) {
+		// 	console.log(products[i]);
+		// }
+	});
+});
 /*
 // margin & markup calculated at insertion / modification
 database.ref("/products").set([

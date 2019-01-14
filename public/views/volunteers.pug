@@ -1,5 +1,18 @@
 html
 	head
-		title "Volunteers"
+		title Volunteers
+		link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="../scripts/products.js")
 	body
-		h1 Welcome to the volunteers page!
+		h1 Volunteers
+		form(action = "/addVolunteer" method = "POST")
+			label(for = "name") Name:
+			input(name = "name")
+			label(for = "price") Initials:
+			input(name = "price")
+			label(for = "cost") Work Hours
+			input(name = "cost")
+			label(for = "quantity") Email
+			input(name = "quantity")
+			button(type = "submit") Submit
