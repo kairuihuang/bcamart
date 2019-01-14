@@ -6,6 +6,17 @@ html
 		script(src="../scripts/products.js")
 	body
 		h1 Hello
+		table
+			thead
+				tr
+					th Item
+					th Cost
+					th Price
+					th Margin
+					th Markup
+					th Quantity
+					th Total Value
+			tbody
 		form(action = "/addProduct" method = "POST")
 			label(for = "name") Name:
 			input(name = "name")
