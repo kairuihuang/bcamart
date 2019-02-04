@@ -10,10 +10,16 @@ $(document).ready(function(){
 			var quantity = data[i].quantity;
 			var totalVal = data[i].totalValue;
 
-			var row = "<tr><td>" + name + "</td><td>" + cost + "</td><td>" + price + "</td><td>" + margin +
-					  " %</td><td>" + markup + " %</td><td>" + quantity + "</td><td>" + totalVal + "</td></tr>";
+			var row = "<tr><td><a href='http://localhost:4000/products/" + i + "'>" + name +
+					  "</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + cost +
+					  "</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + price +
+					  "</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + margin +
+					  " %</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + markup +
+					  " %</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + quantity +
+					  "</a></td><td><a href='http://localhost:4000/products/" + i + "'>" + totalVal + "</a></td></tr>";
 			
 			$("tbody").append(row);
 		}
 	});
+
 });

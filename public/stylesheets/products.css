@@ -10,3 +10,29 @@ table {
 table, th, td {
   border: 1px solid black;
 }
+
+tr {
+    background-color: #eee;
+    border-top: 1px solid #fff;
+}
+
+tr:hover {
+    background-color: #ccc;
+}
+
+th {
+    background-color: #fff;
+}
+
+th, td {
+    padding: 3px 5px;
+}
+
+td:hover {
+    cursor: pointer;
+}
+
+tr a {
+	text-decoration: none;
+	color: black;
+}

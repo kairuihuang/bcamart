@@ -33,6 +33,10 @@ app.get('/products', (req, res) => {
 	// Database stuff goes here
 });
 
+app.get('/products/:id', (req, res) => {
+	res.send("The ID is: " + req.params.id);
+});
+
 app.get('/loadProducts', (req, res) => {
 	database.ref("/products").once("value").then((snapshot) => {
 		var products = snapshot.val();
