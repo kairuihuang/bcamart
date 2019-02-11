@@ -1,38 +1,16 @@
-h1 {
-	color: blue;
-	background-color: yellow;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid black;
-}
-
-tr {
-    background-color: #eee;
-    border-top: 1px solid #fff;
-}
-
 tr:hover {
     background-color: #ccc;
-}
-
-th {
-    background-color: #fff;
-}
-
-th, td {
-    padding: 3px 5px;
 }
 
 td:hover {
     cursor: pointer;
 }
 
-tr a {
+td {
+	text-align: center;
+}
+
+tr a, tr a:hover {
 	text-decoration: none;
 	color: black;
 }
