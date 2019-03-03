@@ -1,11 +1,3 @@
-tr:hover {
-    background-color: #ccc;
-}
-
-td:hover {
-    cursor: pointer;
-}
-
 td {
 	text-align: center;
 }

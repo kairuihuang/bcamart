@@ -3,14 +3,14 @@ html
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible' content='IE=edge')
 		meta(name='viewport' content='width=device-width, initial-scale=1')
+		meta(name='id' content=id)
 
 		title Products
 
-		link(rel='stylesheet' href='css/bootstrap.min.css')
-		link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
 
 	body
-		h2 Hello
+		h2=id
 		table(class='table table-bordered table-hover')
 			thead(class="thead-dark")
 				tr
@@ -22,20 +22,7 @@ html
 					th(class='text-center') Quantity
 					th(class='text-center') Total Value
 			tbody
-		form(action = "/addProduct" method = "POST")
-			label(for = "name") Name:
-			input(name = "name")
-			label(for = "price") Price:
-			input(name = "price")
-			label(for = "cost") Cost
-			input(name = "cost")
-			label(for = "quantity") Quantity
-			input(name = "quantity")
-			label(for = "department") Department
-			input(name = "department")
-			button(type = "submit") Submit
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="js/bootstrap.min.js")
-		script(src="../scripts/products.js")
-
+		script(src="/js/bootstrap.min.js")
+		script(src="../scripts/productPage.js")
