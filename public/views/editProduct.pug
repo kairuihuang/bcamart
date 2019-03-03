@@ -11,18 +11,7 @@ html
 
 	body
 		h2=id
-		table(class='table table-bordered table-hover')
-			thead(class="thead-dark")
-				tr
-					th(class='text-center') Item
-					th(class='text-center') Cost
-					th(class='text-center') Price
-					th(class='text-center') Margin
-					th(class='text-center') Markup
-					th(class='text-center') Quantity
-					th(class='text-center') Total Value
-			tbody
-
+		button(id = "deleteBtn" type = "button" class = "btn btn-danger") Delete Item
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/productPage.js")
+		script(src="../scripts/editProduct.js")

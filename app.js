@@ -32,8 +32,12 @@ app.get('/products', (req, res) => {
 	res.render('products');
 });
 
+app.get('/products/addProduct', (req, res) => {
+	res.render("addProduct");
+});
+
 app.get('/products/:id', (req, res) => {
-	res.render('productPage', {id: req.params.id});
+	res.render('editProduct', {id: req.params.id});
 });
 
 // get all products in DB
@@ -52,7 +56,13 @@ app.get('/loadProduct/:id', (req, res) => {
 	});
 });
 
-app.post('/addProduct', (req, res) => {
+app.post('/deleteProduct/:id', (req, res) => {
+	console.log("delete request processed, id: " + req.params.id);
+	database.ref("/products/list/" + req.params.id).remove();
+	//res.redirect("http://localhost:4000/products"); // doesn't redirect
+});
+
+app.post('/addProductAction', (req, res) => {
 	const reqBody = req.body;
 	const price = parseFloat(reqBody.price);
 	const cost =  parseFloat(reqBody.cost);
@@ -61,8 +71,7 @@ app.post('/addProduct', (req, res) => {
 	database.ref("/products/metadata/id_count").once("value").then((snapshot) => {
 		let id = snapshot.val();
 		addProduct(id, reqBody.name, price, cost, quantity, reqBody.department); // validate data beforehand
-		id += 1;
-		database.ref("/products/metadata/").set({id_count: id});
+		database.ref("/products/metadata/").update({id_count: ++id});
 	});
 
 	res.redirect("http://localhost:4000/products");
@@ -80,7 +89,6 @@ app.get('/volunteers', (req, res) => {
 
 app.post('/addVolunteer', (req, res) => {
 	const reqBody = req.body;
-	console.log(reqBody);
 	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
 	res.redirect("http://localhost:4000/volunteers");
 });
@@ -95,9 +103,9 @@ app.get('/loadVolunteers', (req, res) => {
 // internal functions ___________________________________________________________________________________________________
 
 function addProduct (id, name, price, cost, quantity, department) {
-	const margin = ((price-cost)/price).toFixed(4);
-	const markup = ((price-cost)/cost).toFixed(4);
-	const totalVal = (quantity*cost).toFixed(2);
+	const margin = round((price-cost)/price, 2);
+	const markup = round(((price-cost)/cost), 2);
+	const totalVal = round((quantity*cost), 2);
 
 	database.ref("products/list/" + id).set({
 		id: id,
@@ -112,10 +120,9 @@ function addProduct (id, name, price, cost, quantity, department) {
 	});
 }
 
-// BRUH just use toFixed([amount of decimals]) instead
-// function round(value, decimals) {
-// 	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-// }
+function round(value, decimals) {
+	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
 
 // const port = process.env.PORT || 4000;
 app.listen(4000, () => {

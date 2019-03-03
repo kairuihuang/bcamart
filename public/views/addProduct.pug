@@ -1,0 +1,28 @@
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		title Products
+
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
+
+	body
+		h2 Add Product
+		form(action = "/addProductAction" method = "POST")
+			label(for = "name") Name:
+			input(name = "name")
+			label(for = "price") Price:
+			input(name = "price")
+			label(for = "cost") Cost
+			input(name = "cost")
+			label(for = "quantity") Quantity
+			input(name = "quantity")
+			label(for = "department") Department
+			input(name = "department")
+			button(type = "submit","button" class = "btn btn-success") Submit
+
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="/js/bootstrap.min.js")
+		script(src="../scripts/addProduct.js")
