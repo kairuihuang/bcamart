@@ -1,8 +1,17 @@
-td {
-	text-align: center;
-}
-
 tr a, tr a:hover {
 	text-decoration: none;
 	color: black;
+}
+
+td a {
+    display: block;
+    width: 100%;
+}
+
+.number {
+	text-align: right;
+}
+
+.text {
+	text-align: left;
 }

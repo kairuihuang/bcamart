@@ -11,17 +11,17 @@ html
 
 	body
 		h2 Products Page
-		a(href = "http://localhost:4000/products/addProduct", class="btn btn-default") Add Item
-		table(class='table table-bordered table-hover')
+		a(href="http://localhost:4000/products/addProduct" class="btn btn-secondary") Add Item
+		table(class='table table-hover table-striped')
 			thead(class="thead-dark")
 				tr
-					th(class='text-center') Item
-					th(class='text-center') Cost
-					th(class='text-center') Price
-					th(class='text-center') Margin
-					th(class='text-center') Markup
-					th(class='text-center') Quantity
-					th(class='text-center') Total Value
+					th(class='text-left') Item
+					th(class='text-right') Cost
+					th(class='text-right') Price
+					th(class='text-right') Margin
+					th(class='text-right') Markup
+					th(class='text-right') Quantity
+					th(class='text-right') Total Value
 			tbody
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")

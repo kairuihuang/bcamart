@@ -10,18 +10,18 @@ html
 
 	body
 		h2 Add Product
-		form(action = "/addProductAction" method = "POST")
-			label(for = "name") Name:
-			input(name = "name")
-			label(for = "price") Price:
-			input(name = "price")
-			label(for = "cost") Cost
-			input(name = "cost")
-			label(for = "quantity") Quantity
-			input(name = "quantity")
-			label(for = "department") Department
-			input(name = "department")
-			button(type = "submit","button" class = "btn btn-success") Submit
+		form(action="/addProductAction" method="POST")
+			label(for="name") Name:
+			input(name="name" required)
+			label(for="price") Price:
+			input(name="price" required)
+			label(for="cost") Cost
+			input(name="cost" required)
+			label(for="quantity") Quantity
+			input(name="quantity")
+			label(for="department") Department
+			input(name="department")
+			button(type="submit button" class="btn btn-success") Submit
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")

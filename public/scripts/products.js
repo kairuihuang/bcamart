@@ -21,13 +21,13 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
-				const row = "<tr><td><a href='http://localhost:4000/products/" + id + "'>" + name +
-						  "</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + cost +
-						  "</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + price +
-						  "</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + margin +
-						  "%</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + markup +
-						  "%</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + quantity +
-						  "</a></td><td><a href='http://localhost:4000/products/" + id + "'>" + totalVal + "</a></td></tr>";
+				const row = "<tr><td class='text'><a href='http://localhost:4000/products/" + id + "'>" + name +
+						  "</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + cost +
+						  "</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + price +
+						  "</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + margin +
+						  "%</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + markup +
+						  "%</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + quantity +
+						  "</a></td><td class='number'><a href='http://localhost:4000/products/" + id + "'>" + totalVal + "</a></td></tr>";
 				
 				$("tbody").append(row);
 			}

@@ -59,7 +59,6 @@ app.get('/loadProduct/:id', (req, res) => {
 app.post('/deleteProduct/:id', (req, res) => {
 	console.log("delete request processed, id: " + req.params.id);
 	database.ref("/products/list/" + req.params.id).remove();
-	//res.redirect("http://localhost:4000/products"); // doesn't redirect
 });
 
 app.post('/addProductAction', (req, res) => {
