@@ -18,13 +18,10 @@ div(class = 'container')
         table(id = "table" border = "1")
             thead
                 tr
-                    th First Name 
-                    th Last Name
-                    th Work Hours
-                tr 
-                    td Jacob
-                    td Salerno
-                    td 10
+                    th(class='text-center') Email
+                    th(class='text-center') First Name
+                    th(class='text-center') Hours
+                    th(class='text-center') Last Name
             tbody
     
     div(class = 'tab tab-2')
@@ -37,7 +34,7 @@ div(class = 'container')
         button(type ='button' onclick = 'removeSelectedRow();') Remove
 
 
-
+script(src="../scripts/volunteers.js")
 script.
       var rIndex,
                 table = document.getElementById("table");
@@ -97,7 +94,7 @@ script.
                 {
                     table.rows[i].onclick = function()
                     {
-                      // get the seected row index
+                      // get the selected row index
                       rIndex = this.rowIndex;
                       document.getElementById("fname").value = this.cells[0].innerHTML;
                       document.getElementById("lname").value = this.cells[1].innerHTML;

@@ -1,0 +1,78 @@
+html
+	head
+		link(rel='stylesheet' href='css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/cashier.css')
+
+		link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
+		link(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous')
+	
+	body
+		div(class = "topnav")
+			a(href="http://localhost:4000/") Home
+			a(class = "active" href="http://localhost:4000/cashier") Cashier
+			a(href="http://localhost:4000/products") Products
+			a(href= "http://localhost:4000/volunteers") Volunteers
+
+		div(class = "col-sm-8-box rightnone" id = "first" style = {height: "694px"})
+			h3 List of items
+			label Select Item
+			
+			div(class = "content")
+				
+				
+				div(class = "col-sm-6")
+					label Search
+						input(id = "myInput" type="text" placeholder="Search...")
+				
+				div(class = "col-sm-12")
+					table(class = "table" style = {width: 700})
+						thead
+							tr
+								th Item Id
+								th Item Name
+								th Description
+								th Stocks
+								th Price
+						tbody(id = "myTable")
+
+		div(class = "col-sm-4 box" style = {height: "694px"})
+			h3 Order Details
+
+			div(class = "content")
+
+				table(class = "table" id = "cart")
+					thead
+						tr
+							th(width = "30%") Product Name
+							th(width = "15%") Quantity
+							th(width = "10%") Price
+							th(width = "3%")
+					tbody
+				
+				div
+					label Sub Total
+					span(id = "amount-due" class= "pull-right") $0.00
+				div 
+					label Total
+					span(id = "amount-total" class= "pull-right") $0.00
+
+				form(id = "process form")
+					div(class = "form-group")
+						input(type = "text" class = "form-control" name placeholder = "Enter Payment" autocomplete= "off")
+					div(class = "form-group")
+						input(readonly= "readonly" type = "text" class = "form-control" name placeholder = "Change" id = "change" autocomplete = "off")
+					div(class = "form-group")
+						button(type = "submit" name value = "Process" id = "btn") Process
+
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="js/bootstrap.min.js")
+		script(src="../scripts/cashier.js")
+
+
+
+
+
+
+
+
+

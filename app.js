@@ -61,19 +61,22 @@ app.get('/volunteers', (req, res) => {
 app.post('/addVolunteer', (req, res) => {
 	var reqBody = req.body;
 	console.log(reqBody);
-	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
 	res.redirect("http://localhost:4000/volunteers");
 });
 
 app.get('/loadVolunteers', (req, res) => {
 	database.ref("/volunteers").once("value").then((snapshot) => {
-		var products = snapshot.val();
-		res.send(products);
-		// for (var i = 0; i < products.length; i++) {
-		// 	console.log(products[i]);
-		// }
+		var volunteers = snapshot.val();
+		res.send(volunteers);
+		console.log(volunteers);
+		console.log(volunteers[0].email)
+		console.log(volunteers[1].email)
 	});
 });
+
+app.get('/cashier', (req, res) =>{
+	res.render('cashier');
+})
 
 function addProduct (id, name, price, cost, quantity) {
 	// id needs to be tracked
@@ -147,3 +150,15 @@ database.ref("/products").set([
 app.listen(4000, () => {
 	console.log('Listening on port 4000...');
 });
+
+function addVolunteer(firstName, hours, lastname){
+	database.ref("/volunteers").once("value").then((snapshot) => {
+		var volunteers = snapshot.val();
+		database.ref("volunteers/" + volunteers.length).set
+		{
+			firstName: firstName
+			hours: hours
+			lastName: lastName
+		}
+	});
+}
