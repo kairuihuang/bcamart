@@ -13,7 +13,7 @@ html
 			a(href="http://localhost:4000/products") Products
 			a(href= "http://localhost:4000/volunteers") Volunteers
 
-		div(class = "col-sm-8-box rightnone" id = "first" style = {height: "694px"})
+		div(class = "rightnone" id = "first" style = {height: "694px"})
 			h3 List of items
 			label Select Item
 			
@@ -24,18 +24,18 @@ html
 					label Search
 						input(id = "myInput" type="text" placeholder="Search...")
 				
-				div(class = "col-sm-12")
-					table(class = "table" style = {width: 700})
+				div(class = "col-sm-8")
+					table(class = "table" style = {width: 700} id = "selectItem")
 						thead
 							tr
-								th Item Id
 								th Item Name
-								th Description
-								th Stocks
+								th Cost
 								th Price
+								th Quantity
+								
 						tbody(id = "myTable")
 
-		div(class = "col-sm-4 box" style = {height: "694px"})
+		div(class = "float-right" style = {height: "694px"} id = "second")
 			h3 Order Details
 
 			div(class = "content")
@@ -51,10 +51,10 @@ html
 				
 				div
 					label Sub Total
-					span(id = "amount-due" class= "pull-right") $0.00
+					span(id = "amount-due" class= "pull-right") $0.00&nbsp
 				div 
 					label Total
-					span(id = "amount-total" class= "pull-right") $0.00
+					span(id = "amount-total" class= "pull-right") $0.00&nbsp
 
 				form(id = "process form")
 					div(class = "form-group")
