@@ -12,15 +12,15 @@ html
 		h2 Add Product
 		form(id="addProductForm" action="/addProductAction" method="POST")
 			label(for="name") Name:
-			input(name="name" required)
+			input(id="name-input" name="name" required)
 			label(for="price") Price:
-			input(name="price" required)
+			input(id="price-input" name="price" required)
 			label(for="cost") Cost
-			input(name="cost" required)
+			input(id="cost-input" name="cost" required)
 			label(for="quantity") Quantity
-			input(name="quantity")
+			input(id="quantity-input" name="quantity" required)
 			label(for="department") Department
-			input(name="department")
+			input(id="department-input" name="department")
 			button(type="submit button" class="btn btn-success") Submit
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")

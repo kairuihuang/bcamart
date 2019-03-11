@@ -67,14 +67,14 @@ app.post('/deleteProduct/:id', (req, res) => {
 // add product to DB
 app.post('/addProductAction', (req, res) => {
 	const reqBody = req.body;
-	const price = parseFloat(reqBody.price);
-	const cost =  parseFloat(reqBody.cost);
+	const price = round(parseFloat(reqBody.price.replace("$", "")), 2);
+	const cost =  round(parseFloat(reqBody.cost.replace("$", "")), 2);
 	const quantity = parseInt(reqBody.quantity);
 
 	database.ref("/products/metadata/id_count").once("value").then((snapshot) => {
 		let id = snapshot.val();
-		addProduct(id, reqBody.name, price, cost,
-                   quantity, reqBody.department); // validate data beforehand
+		addProduct(id, (reqBody.name).trim(), price, cost,
+                   quantity, (reqBody.department).trim());
 		database.ref("/products/metadata/").update({id_count: ++id});
 	});
 
