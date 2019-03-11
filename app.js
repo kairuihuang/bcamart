@@ -1,8 +1,9 @@
+// 1) Imports and middleware ___________________________________________________
 const express = require('express');
-const app = express();
 const firebase = require('firebase');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const app = express();
 const upload = multer();
 
 const config = {
@@ -21,9 +22,9 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(upload.array());
 
+// 2) Product page routing _____________________________________________________
 app.get('/', (req, res) => {
 	res.send('Welcome to the root page!');
 });
@@ -40,6 +41,7 @@ app.get('/products/:id', (req, res) => {
 	res.render('editProduct', {id: req.params.id});
 });
 
+// 3) Product page actions _____________________________________________________
 // get all products in DB
 app.get('/loadProducts', (req, res) => {
 	database.ref("/products/list").once("value").then((snapshot) => {
@@ -56,11 +58,13 @@ app.get('/loadProduct/:id', (req, res) => {
 	});
 });
 
+// delete product by ID
 app.post('/deleteProduct/:id', (req, res) => {
 	console.log("delete request processed, id: " + req.params.id);
 	database.ref("/products/list/" + req.params.id).remove();
 });
 
+// add product to DB
 app.post('/addProductAction', (req, res) => {
 	const reqBody = req.body;
 	const price = parseFloat(reqBody.price);
@@ -69,13 +73,15 @@ app.post('/addProductAction', (req, res) => {
 
 	database.ref("/products/metadata/id_count").once("value").then((snapshot) => {
 		let id = snapshot.val();
-		addProduct(id, reqBody.name, price, cost, quantity, reqBody.department); // validate data beforehand
+		addProduct(id, reqBody.name, price, cost,
+                   quantity, reqBody.department); // validate data beforehand
 		database.ref("/products/metadata/").update({id_count: ++id});
 	});
 
 	res.redirect("http://localhost:4000/products");
 });
 
+// _____________________________________________________________________________
 
 app.get('/transactions', (req, res) => {
 	res.render('transactions');
@@ -106,20 +112,10 @@ app.get('/cashier', (req, res) =>{
 	res.render('cashier');
 })
 
-function addProduct (id, name, price, cost, quantity) {
-	// id needs to be tracked
-	var margin = round((price-cost)/price, 4);
-	var markup = round((price-cost)/cost, 4);
-	var totalVal = round(quantity*cost, 2);
-		const products = snapshot.val();
-		res.send(products);
-}
-
-// internal functions ___________________________________________________________________________________________________
-
+// 8) internal functions _______________________________________________________
 function addProduct (id, name, price, cost, quantity, department) {
-	const margin = round((price-cost)/price, 2);
-	const markup = round(((price-cost)/cost), 2);
+	const margin = round((price-cost)/price, 4);
+	const markup = round(((price-cost)/cost), 4);
 	const totalVal = round((quantity*cost), 2);
 
 	database.ref("products/list/" + id).set({
@@ -135,15 +131,6 @@ function addProduct (id, name, price, cost, quantity, department) {
 	});
 }
 
-function round(value, decimals) {
-	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
-
-// const port = process.env.PORT || 4000;
-app.listen(4000, () => {
-	console.log('Listening on port 4000...');
-});
-
 function addVolunteer(firstName, hours, lastname){
 	database.ref("/volunteers").once("value").then((snapshot) => {
 		var volunteers = snapshot.val();
@@ -155,3 +142,12 @@ function addVolunteer(firstName, hours, lastname){
 		}
 	});
 }
+
+function round(value, decimals) {
+	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
+// const port = process.env.PORT || 4000;
+app.listen(4000, () => {
+	console.log('Listening on port 4000...');
+});

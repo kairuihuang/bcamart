@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	const id = getMeta("id");
 	const loadProductStr = "/loadProduct/" + id;
 	const deleteProductStr = "/deleteProduct/" + id;
