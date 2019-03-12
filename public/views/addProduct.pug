@@ -10,19 +10,19 @@ html
 
 	body
 		h2 Add Product
-		form(id="addProductForm" action="/addProductAction" method="POST")
-			label(for="name") Name:
-			input(id="name-input" name="name" required)
-			label(for="price") Price:
-			input(id="price-input" name="price" required)
-			label(for="cost") Cost
-			input(id="cost-input" name="cost" required)
-			label(for="quantity") Quantity
-			input(id="quantity-input" name="quantity" required)
-			label(for="department") Department
-			input(id="department-input" name="department")
-			button(type="submit button" class="btn btn-success") Submit
+		form(id='addProductForm' action='/addProductAction' method='POST')
+			label(for='name') Name:
+			input(id='name-input' name='name' required)
+			label(for='price') Price:
+			input(id='price-input' name='price' required)
+			label(for='cost') Cost
+			input(id='cost-input' name='cost' required)
+			label(for='quantity') Quantity
+			input(id='quantity-input' name='quantity' required)
+			label(for='department') Department
+			input(id='department-input' name='department')
+			button(type='submit button' class='btn btn-success') Submit
 
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/addProduct.js")
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script(src='../scripts/addProduct.js')

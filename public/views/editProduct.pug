@@ -10,8 +10,18 @@ html
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
 
 	body
-		h2=id
-		button(id="deleteBtn" type="button" class="btn btn-danger") Delete Item
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/editProduct.js")
+		h3=id
+		
+		// shared POST action with addProduct
+		form(id='editProductForm' action='/addProductAction' method='POST')
+			// prefill form data here
+		
+		
+		button(id='backBtn' type='button' class='btn btn-outline-secondary') Back
+		button(id='editBtn' type='submit button' class='btn btn-success'
+		       form='editProductForm') Edit
+		button(id='deleteBtn' type='button' class='btn btn-danger') Delete
+		
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script(src='../scripts/editProduct.js')

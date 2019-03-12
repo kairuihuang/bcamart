@@ -1,10 +1,12 @@
 $(document).ready(function() {
-	const id = getMeta("id");
-	const loadProductStr = "/loadProduct/" + id;
-	const deleteProductStr = "/deleteProduct/" + id;
+	const id = getMeta('id');
+	const loadProductStr = '/loadProduct/' + id;
+	const deleteProductStr = '/deleteProduct/' + id;
 
 	$.get(loadProductStr, (data, status) => {
 		console.log(data);
+
+		// extract & format data
 		const name = data.name;
 		const quantity = data.quantity;
 		var cost = data.cost;
@@ -21,10 +23,12 @@ $(document).ready(function() {
 		else { margin = margin.toFixed(1); }
 		if (markup >= 100) { markup = markup.toFixed(); }
 		else { markup = markup.toFixed(1); }
+
+		// create and add elements using jQuery
 	});
 
-	$("#deleteBtn").click( () => {
-		const response = confirm("Are you sure you want to delete this item?");
+	$('#deleteBtn').click( () => {
+		const response = confirm('Are you sure you want to delete this item?');
 		if (response) {
 			$.post(deleteProductStr);
 			window.location.assign('/products');

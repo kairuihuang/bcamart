@@ -7,9 +7,9 @@ const app = express();
 const upload = multer();
 
 const config = {
-  apiKey: "AIzaSyCtyH_NnJVubNiJLycE7dcO_svhpCHQf-8",
-  authDomain: "database-cdf92.firebaseapp.com",
-  databaseURL: "https://database-cdf92.firebaseio.com",
+  apiKey: 'AIzaSyCtyH_NnJVubNiJLycE7dcO_svhpCHQf-8',
+  authDomain: 'database-cdf92.firebaseapp.com',
+  databaseURL: 'https://database-cdf92.firebaseio.com',
 };
 
 firebase.initializeApp(config);
@@ -34,7 +34,7 @@ app.get('/products', (req, res) => {
 });
 
 app.get('/products/addProduct', (req, res) => {
-	res.render("addProduct");
+	res.render('addProduct');
 });
 
 app.get('/products/:id', (req, res) => {
@@ -44,7 +44,7 @@ app.get('/products/:id', (req, res) => {
 // 3) Product page actions _____________________________________________________
 // get all products in DB
 app.get('/loadProducts', (req, res) => {
-	database.ref("/products/list").once("value").then((snapshot) => {
+	database.ref('/products/list').once('value').then((snapshot) => {
 		const products = snapshot.val();
 		res.send(products);
 	});
@@ -52,7 +52,7 @@ app.get('/loadProducts', (req, res) => {
 
 // loads single product by ID
 app.get('/loadProduct/:id', (req, res) => {
-	database.ref("/products/list/" + req.params.id).once("value").then((snapshot) => {
+	database.ref('/products/list/' + req.params.id).once('value').then((snapshot) => {
 		const product = snapshot.val();
 		res.send(product);
 	});
@@ -60,25 +60,25 @@ app.get('/loadProduct/:id', (req, res) => {
 
 // delete product by ID
 app.post('/deleteProduct/:id', (req, res) => {
-	console.log("delete request processed, id: " + req.params.id);
-	database.ref("/products/list/" + req.params.id).remove();
+	console.log('delete request processed, id: ' + req.params.id);
+	database.ref('/products/list/' + req.params.id).remove();
 });
 
 // add product to DB
 app.post('/addProductAction', (req, res) => {
 	const reqBody = req.body;
-	const price = round(parseFloat(reqBody.price.replace("$", "")), 2);
-	const cost =  round(parseFloat(reqBody.cost.replace("$", "")), 2);
+	const price = round(parseFloat(reqBody.price.replace('$', '')), 2);
+	const cost =  round(parseFloat(reqBody.cost.replace('$', '')), 2);
 	const quantity = parseInt(reqBody.quantity);
 
-	database.ref("/products/metadata/id_count").once("value").then((snapshot) => {
+	database.ref('/products/metadata/id_count').once('value').then((snapshot) => {
 		let id = snapshot.val();
 		addProduct(id, (reqBody.name).trim(), price, cost,
                    quantity, (reqBody.department).trim());
-		database.ref("/products/metadata/").update({id_count: ++id});
+		database.ref('/products/metadata/').update({id_count: ++id});
 	});
 
-	res.redirect("http://localhost:4000/products");
+	res.redirect('http://localhost:4000/products');
 });
 
 // _____________________________________________________________________________
@@ -95,11 +95,11 @@ app.post('/addVolunteer', (req, res) => {
 	console.log(reqBody);
 	const reqBody = req.body;
 	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
-	res.redirect("http://localhost:4000/volunteers");
+	res.redirect('http://localhost:4000/volunteers');
 });
 
 app.get('/loadVolunteers', (req, res) => {
-	database.ref("/volunteers").once("value").then((snapshot) => {
+	database.ref('/volunteers').once('value').then((snapshot) => {
 		var volunteers = snapshot.val();
 		res.send(volunteers);
 		console.log(volunteers);
@@ -118,7 +118,7 @@ function addProduct (id, name, price, cost, quantity, department) {
 	const markup = round(((price-cost)/cost), 4);
 	const totalVal = round((quantity*cost), 2);
 
-	database.ref("products/list/" + id).set({
+	database.ref('products/list/' + id).set({
 		id: id,
 		name: name,
 		price: price,
@@ -132,9 +132,9 @@ function addProduct (id, name, price, cost, quantity, department) {
 }
 
 function addVolunteer(firstName, hours, lastname){
-	database.ref("/volunteers").once("value").then((snapshot) => {
+	database.ref('/volunteers').once('value').then((snapshot) => {
 		var volunteers = snapshot.val();
-		database.ref("volunteers/" + volunteers.length).set
+		database.ref('volunteers/' + volunteers.length).set
 		{
 			firstName: firstName
 			hours: hours
