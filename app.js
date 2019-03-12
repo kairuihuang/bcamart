@@ -60,7 +60,6 @@ app.get('/loadProduct/:id', (req, res) => {
 
 // delete product by ID
 app.post('/deleteProduct/:id', (req, res) => {
-	console.log('delete request processed, id: ' + req.params.id);
 	database.ref('/products/list/' + req.params.id).remove();
 });
 
@@ -71,14 +70,18 @@ app.post('/addProductAction', (req, res) => {
 	const cost =  round(parseFloat(reqBody.cost.replace('$', '')), 2);
 	const quantity = parseInt(reqBody.quantity);
 
-	database.ref('/products/metadata/id_count').once('value').then((snapshot) => {
-		let id = snapshot.val();
-		addProduct(id, (reqBody.name).trim(), price, cost,
-                   quantity, (reqBody.department).trim());
-		database.ref('/products/metadata/').update({id_count: ++id});
-	});
+    var isActive = false;
 
-	res.redirect('http://localhost:4000/products');
+    if (reqBody.isActive === 'on') {isActive = true;}
+
+    database.ref('/products/metadata/id_count').once('value').then((snapshot) => {
+        let id = snapshot.val();
+        addProduct(id, (reqBody.name).trim(), price, cost,
+                   quantity, (reqBody.department).trim(), isActive);
+        database.ref('/products/metadata/').update({id_count: ++id});
+    });
+
+    res.redirect('http://localhost:4000/products');
 });
 
 // _____________________________________________________________________________
@@ -113,7 +116,7 @@ app.get('/cashier', (req, res) =>{
 })
 
 // 8) internal functions _______________________________________________________
-function addProduct (id, name, price, cost, quantity, department) {
+function addProduct (id, name, price, cost, quantity, department, isActive) {
 	const margin = round((price-cost)/price, 4);
 	const markup = round(((price-cost)/cost), 4);
 	const totalVal = round((quantity*cost), 2);
@@ -127,7 +130,8 @@ function addProduct (id, name, price, cost, quantity, department) {
 		margin: margin,
 		markup: markup,
 		totalValue: totalVal,
-		department: department
+		department: department,
+        isActive: isActive
 	});
 }
 
