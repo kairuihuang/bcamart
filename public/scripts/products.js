@@ -3,8 +3,9 @@ $(document).ready(function() {
 	const baseURL = "\'http://localhost:4000/products/";
 
 	$.get('/loadProducts', (data, status) => {
+		console.log(data);
 		for (let i = 0; i < data.length; i++) {
-			if (data[i] != null) {
+			if (data[i] !== null) {
 				var id = data[i].id;
 				var name = data[i].name;
 				var cost = data[i].cost;
@@ -23,6 +24,7 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
+				// FIXME: only cell TEXT is clickable, make entire cells/row clickable
 				const row =
 					"<tr>\
 						<td class='text'>\

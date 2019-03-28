@@ -42,12 +42,12 @@ html
 					input(class='form-control' id='quantity-input' name='quantity' required)
 					div(class='input-group-append')
 						span(class='input-group-text') items
-					
-			// might use dropdown and "add new" option (using <select>)
-			// or use button with dropdown input group
+
 			div(class='form-group') 
-				label(for='department') Department
-				input(class='form-control' id='department-input' name='department')
+				label(id='depLabel' for='department') Department
+				select(class='form-control' id='department-select' name='department')
+					option(selected='true' disabled) Select
+					option(id='addNew') Add new
 				
 			button(type='submit button' class='btn btn-success' form='addProductForm') Submit
 
