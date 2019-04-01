@@ -39,6 +39,9 @@ $(document).ready(function() {
 		}
 
 		$.get('/getDepartments', (data, status) => {
+			// will display in alphabetical order due to nature of .after()
+			data.sort(dynamicSort('-name'));
+
 			for (let i = 0; i < data.length; i++) {
 				let department = data[i].name;
 				let html = "<option value='" + department + "'>" + department + "</option>";
@@ -148,6 +151,24 @@ $(document).ready(function() {
 	});
 
 });
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if (sortOrder == -1) {
+            return b[property].localeCompare(a[property]);
+        }
+		else {
+            return a[property].localeCompare(b[property]);
+        }
+    }
+}
 
 function getMeta(metaName) {
   const metas = document.getElementsByTagName('meta');
