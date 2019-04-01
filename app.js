@@ -109,6 +109,31 @@ app.post('/addProductAction', (req, res) => {
     res.redirect('http://localhost:4000/products');
 });
 
+app.post('/editProductAction', (req, res) => {
+    const reqBody = req.body;
+    const id = reqBody.id;
+    const name = (reqBody.name).trim();
+	const price = round(parseFloat(reqBody.price.replace('$', '')), 2);
+	const cost =  round(parseFloat(reqBody.cost.replace('$', '')), 2);
+	const quantity = parseInt(reqBody.quantity);
+    let department;
+
+    if (reqBody.department === null || reqBody.department === undefined) {
+        department = 'Unassigned';
+    }
+    else {
+        department = (reqBody.department).trim();
+        if (department === '') { department = 'Unassigned'; }
+    }
+
+    let isActive = false;
+    if (reqBody.isActive === 'on') {isActive = true;}
+
+    editProduct(id, name, price, cost, quantity, department, isActive);
+
+    res.redirect('http://localhost:4000/products');
+});
+
 // _____________________________________________________________________________
 
 app.get('/transactions', (req, res) => {
@@ -141,73 +166,100 @@ app.get('/cashier', (req, res) =>{
 })
 
 // 8) internal functions _______________________________________________________
-function addProduct(name, price, cost, quantity, department, isActive) {
-    // prelim calculations
+async function addProduct(name, price, cost, quantity, department, isActive) {
     const margin = round((price-cost)/price, 4);
     const markup = round(((price-cost)/cost), 4);
     const totalVal = round((quantity*cost), 2);
 
+    let snap;
+
     const ref = database.ref('/products/metadata/');
-    ref.once('value').then((snap) => {
-        const new_PID = snap.val().newID;
-        const proCount = snap.val().count;
+    snap = await ref.once('value');
 
-        const ref1 = database.ref('/departments/list');
-        ref1.once('value').then(async (snap) => {
-            let depList = snap.val();
-            let depID = getDepartmentID_ByName(depList, department);
+    const new_PID = snap.val().newID;
+    const proCount = snap.val().count;
 
-            if (depID < 0) { // if dep doesn't exist, add new department
-                await addDepartment(department);
-                ref1.once('value').then((snap) => { // use updated variables
-                    depList = snap.val();
-                    depID = getDepartmentID_ByName(depList, department);
-                    let productObj = {
-                        id: new_PID,
-                        name: name,
-                        price: price,
-                        cost: cost,
-                        margin: margin,
-                        markup: markup,
-                        quantity: quantity,
-                        department: {
-                            id: depID,
-                            name: department
-                        },
-                        isActive: isActive,
-                        totalValue: totalVal
-                    };
-                    database.ref('/products/list/' + new_PID).set(productObj);
-                    addProduct_Department(depID, productObj);
-                });
-            }
-            else {
-                let productObj = {
-                    id: new_PID,
-                    name: name,
-                    price: price,
-                    cost: cost,
-                    margin: margin,
-                    markup: markup,
-                    quantity: quantity,
-                    department: {
-                        id: depID,
-                        name: department
-                    },
-                    isActive: isActive,
-                    totalValue: totalVal
-                };
-                database.ref('/products/list/' + new_PID).set(productObj);
-                addProduct_Department(depID, productObj);
-            }
+    const ref1 = database.ref('/departments/list');
+    snap = await ref1.once('value');
 
-            // update metadata
-            database.ref('/products/metadata').update({
-                newID: (new_PID + 1),
-                count: (proCount + 1)
-            });
-        });
+    let depList = snap.val();
+    let depID = await getDepartmentID_ByName(department);
+
+    if (depID < 0) { // if dep doesn't exist, add new department
+        await addDepartment(department);
+        snap = await ref1.once('value');
+        depList = snap.val();
+        depID = await getDepartmentID_ByName(department);
+    }
+
+    let productObj = {
+        id: new_PID,
+        name: name,
+        price: price,
+        cost: cost,
+        margin: margin,
+        markup: markup,
+        quantity: quantity,
+        department: {
+            id: depID,
+            name: department
+        },
+        isActive: isActive,
+        totalValue: totalVal
+    };
+
+    database.ref('/products/list/' + new_PID).set(productObj);
+    addProduct_Department(depID, productObj);
+
+    // update metadata
+    database.ref('/products/metadata').update({
+        newID: (new_PID + 1),
+        count: (proCount + 1)
     });
+}
+
+async function editProduct(id, name, price, cost, quantity, department, isActive) {
+    const margin = round((price-cost)/price, 4);
+    const markup = round(((price-cost)/cost), 4);
+    const totalVal = round((quantity*cost), 2);
+
+    const ref = database.ref('/products/list/' + id);
+    let snap = await ref.once('value');
+
+    let old_productObj = snap.val();
+    let old_depID = old_productObj.department.id;
+    let new_depID = await getDepartmentID_ByName(department);
+
+    let new_productObj = {
+        id: id,
+        name: name,
+        price: price,
+        cost: cost,
+        margin: margin,
+        markup: markup,
+        quantity: quantity,
+        department: {
+            id: new_depID, // if same dep, then new = old
+            name: department
+        },
+        isActive: isActive,
+        totalValue: totalVal
+    };
+
+    // if new = old, don't modify departments
+    if (new_depID !== old_depID) {
+        if (new_depID < 0) { // if moving to new
+            await addDepartment(department);
+            new_depID = await getDepartmentID_ByName(department);
+            new_productObj.department.id = new_depID;
+        }
+        removeProduct_Department(old_depID, id);
+        addProduct_Department(new_depID, new_productObj);
+    }
+
+    database.ref('/products/list/' + id).update(new_productObj);
+    database.ref('/departments/list/' + new_depID + '/products/' + id)
+        .update(new_productObj);
 }
 
 function removeProduct_Department(depID, proID) {
@@ -253,7 +305,22 @@ async function addDepartment(department) {
     });
 }
 
-function getDepartmentID_ByName(list, name) {
+async function getDepartmentID_ByName(name) {
+    const ref = database.ref('/departments/list');
+    let snap = await ref.once('value');
+    const list = snap.val();
+
+    for (let i = 0; i < list.length; i++) {
+        if (name === list[i].name) { return list[i].id; }
+    }
+    return -1;
+}
+
+async function getProductID_ByName(name) {
+    const ref = database.ref('/products/list');
+    let snap = await ref.once('value');
+    const list = snap.val();
+
     for (let i = 0; i < list.length; i++) {
         if (name === list[i].name) { return list[i].id; }
     }
