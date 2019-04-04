@@ -106,6 +106,31 @@ app.get('/cashier', (req, res) =>{
 	res.render('cashier');
 })
 
+app.post('/finalizeTransaction', (req, res) =>{
+	console.log("got here");
+	const reqBody = req.body
+	console.log("got here");
+	console.log(reqBody.server[2]);
+	database.ref("/Transactions/metadata/count").once("value").then((snapshot) => {
+		let id = snapshot.val();
+		console.log(id);
+		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2]); // validate data beforehand
+		database.ref("/Transactions/metadata/").update({count: ++id});
+		database.ref("/Transactions/metadata/").update({newID: count});
+	});
+	res.redirect("http://localhost:4000/cashier");
+})
+
+app.get('/login', (req, res) =>{
+	res.render('login');
+})
+
+app.get('/authenticate_user', (req, res) =>{
+	console.log("got here");
+	const reqBody = req.body
+	console.log(reqBody);
+})
+
 function addProduct (id, name, price, cost, quantity) {
 	// id needs to be tracked
 	var margin = round((price-cost)/price, 4);
@@ -153,5 +178,14 @@ function addVolunteer(firstName, hours, lastname){
 			hours: hours
 			lastName: lastName
 		}
+	});
+}
+
+function finalizeTransaction(id, total, volunteer, timestamp){
+	database.ref("Transactions/list/" + id).set({
+		id: id,
+		total: total,
+		volunteer: volunteer,
+		timestamp: timestamp
 	});
 }

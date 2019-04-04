@@ -11,6 +11,10 @@
 	width:50%;
 }
 
+#cart {
+	margin-bottom: 1em;
+}
+
 content{
 	width: 80%;
 }
@@ -22,6 +26,7 @@ h3 {
 	text-indent: inherit;
 	height: 100px;
 	margin-top: 0px !important;
+	padding-top: 1em;
 }
 
 
