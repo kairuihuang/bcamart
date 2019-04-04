@@ -11,10 +11,13 @@ html
 
 	body
 		h2 Products Page
-		a(href="http://localhost:4000/products/addProduct" class="btn btn-secondary") Add Item
+		label(for='search') Search:
+		input(class='form-control' id='productSearch' name='search')
+		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Item
 		table(class='table table-hover table-striped')
-			thead(class="thead-dark")
+			thead(class='thead-dark')
 				tr
+					th(class='text-left') Department
 					th(class='text-left') Item
 					th(class='text-right') Cost
 					th(class='text-right') Price
@@ -22,9 +25,8 @@ html
 					th(class='text-right') Markup
 					th(class='text-right') Quantity
 					th(class='text-right') Total Value
-			tbody
+			tbody(id='productTable')
 
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/products.js")
-
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+	script(src="/js/bootstrap.min.js")
+	script(src="../scripts/products.js")

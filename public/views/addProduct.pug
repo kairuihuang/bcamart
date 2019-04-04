@@ -4,25 +4,55 @@ html
 		meta(http-equiv='X-UA-Compatible' content='IE=edge')
 		meta(name='viewport' content='width=device-width, initial-scale=1')
 
-		title Products
+		title Add product
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
 
 	body
 		h2 Add Product
-		form(id="addProductForm" action="/addProductAction" method="POST")
-			label(for="name") Name:
-			input(name="name" required)
-			label(for="price") Price:
-			input(name="price" required)
-			label(for="cost") Cost
-			input(name="cost" required)
-			label(for="quantity") Quantity
-			input(name="quantity")
-			label(for="department") Department
-			input(name="department")
-			button(type="submit button" class="btn btn-success") Submit
+		
+		form(id='addProductForm' action='/addProductAction' method='POST')
+			div(class='form-group')
+				label(for='name' type='text') Name
+				div(class='input-group')
+					input(class='form-control' id='name-input' name='name' required)
+					div(class='input-group-append')
+						span(class='input-group-text') Display on register
+						div(class='input-group-text')
+							input(class='form-check-input' type='checkbox'
+							      name='isActive' checked)
+			
+			div(class='form-group')
+				label(for='price' type='number') Price
+				div(class='input-group')
+					div(class='input-group-prepend')
+						span(class='input-group-text') $
+					input(class='form-control' id='price-input' name='price' required)
+			
+			div(class='form-group')
+				label(for='cost' type='number') Cost
+				div(class='input-group')
+					div(class='input-group-prepend')
+						span(class='input-group-text') $
+					input(class='form-control' id='cost-input' name='cost' required)
+			
+			div(class='form-group')
+				label(for='quantity' type='number') Quantity
+				div(class='input-group')
+					input(class='form-control' id='quantity-input' name='quantity' required)
+					div(class='input-group-append')
+						span(class='input-group-text') items
 
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/addProduct.js")
+			div(class='form-group') 
+				label(id='depLabel' for='department') Department
+				select(class='form-control' id='department-select' name='department')
+					option(selected='true' disabled) Select
+					option(id='addNew') Add new
+			
+			a(href='http://localhost:4000/products' class='btn btn-outline-secondary') Back
+			button(type='submit button' class='btn btn-success' form='addProductForm') Add
+			
+
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script(src='../scripts/addProduct.js')

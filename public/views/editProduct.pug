@@ -5,13 +5,58 @@ html
 		meta(name='viewport' content='width=device-width, initial-scale=1')
 		meta(name='id' content=id)
 
-		title Products
+		title Edit product
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
 
 	body
-		h2=id
-		button(id="deleteBtn" type="button" class="btn btn-danger") Delete Item
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		script(src="/js/bootstrap.min.js")
-		script(src="../scripts/editProduct.js")
+		h3 Edit Product
+		
+		form(id='editProductForm' action='/editProductAction' method='POST')
+			div(class='form-group')
+				label(for='name' type='text') Name
+				div(class='input-group')
+					input(class='form-control' id='name-input' name='name' required)
+					div(class='input-group-append')
+						span(class='input-group-text') Display on register
+						div(class='input-group-text')
+							input(class='form-check-input' id='isActiveCheck'
+							      type='checkbox' name='isActive')
+			
+			div(class='form-group')
+				label(for='price' type='number') Price
+				div(class='input-group')
+					div(class='input-group-prepend')
+						span(class='input-group-text') $
+					input(class='form-control' id='price-input' name='price' required)
+			
+			div(class='form-group')
+				label(for='cost' type='number') Cost
+				div(class='input-group')
+					div(class='input-group-prepend')
+						span(class='input-group-text') $
+					input(class='form-control' id='cost-input' name='cost' required)
+			
+			div(class='form-group')
+				label(for='quantity' type='number') Quantity
+				div(class='input-group')
+					input(class='form-control' id='quantity-input' name='quantity' required)
+					div(class='input-group-append')
+						span(class='input-group-text') items
+
+			div(class='form-group') 
+				label(id='depLabel' for='department') Department
+				select(class='form-control' id='department-select' name='department')
+					option(selected='true' disabled) Select
+					option(id='addNew') Add new
+		
+			input(id='productID' name='id' value=id type='hidden')
+				
+		a(href='http://localhost:4000/products' class='btn btn-outline-secondary') Back
+		button(id='editBtn' type='submit button' class='btn btn-success'
+		       form='editProductForm') Edit
+		button(id='deleteBtn' type='button' class='btn btn-danger') Delete
+		
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script(src='../scripts/editProduct.js')
