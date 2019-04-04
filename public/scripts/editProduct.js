@@ -54,6 +54,14 @@ $(document).ready(function() {
 
 	});
 
+	$('#editBtn').click( (event) => {
+		const response = confirm('Are you sure you want to save these changes?');
+		if (!response) {
+			event.preventDefault();
+			alert("Was preventDefault() called: " + event.isDefaultPrevented());
+		}
+	});
+
 	$('#deleteBtn').click( () => {
 		const response = confirm('Are you sure you want to delete this item?');
 		if (response) {

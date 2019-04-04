@@ -54,17 +54,17 @@ $(document).ready(function() {
 						</td>\
 					</tr>";
 
-				$("tbody").append(row);
+				$('tbody').append(row);
 			}
 		}
 	});
 
 	// table filtering
 	$('#productSearch').on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#productTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
+    	var value = $(this).val().toLowerCase();
+    	$("#productBody tr").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+  	});
 
 });

@@ -13,7 +13,7 @@ html
 		h2 Products Page
 		label(for='search') Search:
 		input(class='form-control' id='productSearch' name='search')
-		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Item
+		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Product
 		table(class='table table-hover table-striped')
 			thead(class='thead-dark')
 				tr
@@ -25,7 +25,7 @@ html
 					th(class='text-right') Markup
 					th(class='text-right') Quantity
 					th(class='text-right') Total Value
-			tbody(id='productTable')
+			tbody(id='productBody')
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="/js/bootstrap.min.js")
