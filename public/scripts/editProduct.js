@@ -8,8 +8,11 @@ $(document).ready(function() {
 	var isEmpty = false;
 
 	$.get('/loadProducts', (data, status) => {
+		console.log(data);
 		for (let i = 0; i < data.length; i++) {
-			products.push(data[i].name);
+			if (data[i] !== null) {
+				products.push(data[i].name);
+			}
 		}
 	});
 

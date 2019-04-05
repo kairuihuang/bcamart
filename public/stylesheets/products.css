@@ -3,9 +3,8 @@ tr a, tr a:hover {
 	color: black;
 }
 
-td a {
-    display: block;
-    width: 100%;
+td:hover {
+	cursor: pointer;
 }
 
 .number {

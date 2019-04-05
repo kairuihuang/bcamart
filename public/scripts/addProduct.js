@@ -8,16 +8,20 @@ $(document).ready(function() {
 		data.sort(dynamicSort('-name'));
 
 		for (let i = 0; i < data.length; i++) {
-			let department = data[i].name;
-			let html = "<option value='" + department + "'>" + department + "</option>";
+			if (data[i] !== null) {
+				let department = data[i].name;
+				let html = "<option value='" + department + "'>" + department + "</option>";
 
-			$('#addNew').after(html);
+				$('#addNew').after(html);
+			}
 		}
 	});
 
 	$.get('/loadProducts', (data, status) => {
 		for (let i = 0; i < data.length; i++) {
-			products.push(data[i].name);
+			if (data[i] !== null) {
+				products.push(data[i].name);
+			}
 		}
 	});
 

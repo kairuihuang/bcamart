@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	const baseURL = "\'http://localhost:4000/products/";
+	const baseURL = 'http://localhost:4000/products/';
 
 	$.get('/loadProducts', (data, status) => {
 		for (let i = 0; i < data.length; i++) {
@@ -25,38 +25,26 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
-				// FIXME: only cell TEXT is clickable, make entire cells/row clickable
+				// TODO: Table sorting!
+
 				const row =
-					"<tr>\
-						<td class='text'>\
-							<a href=" + baseURL + id + "'>" + department + "</a>\
-						</td>\
-						<td class='text'>\
-							<a href=" + baseURL + id + "'>" + name + "</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + cost +"</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + price + "</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + margin + "%</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + markup + "%</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + quantity + "</a>\
-						</td>\
-						<td class='number'>\
-							<a href=" + baseURL + id + "'>" + totalVal + "</a>\
-						</td>\
+					"<tr class='productRow' id='" + id + "'>\
+						<td class='text'>" + department + "</td>\
+						<td class='text'>" + name + "</td>\
+						<td class='number'>" + cost + "</td>\
+						<td class='number'>" + price + "</td>\
+						<td class='number'>" + margin + "</td>\
+						<td class='number'>" + markup + "</td>\
+						<td class='number'>" + quantity + "</td>\
+						<td class='number'>" + totalVal + "</td>\
 					</tr>";
 
 				$('tbody').append(row);
 			}
 		}
+		$('.productRow').click((event) => {
+			location = baseURL + event.currentTarget.id;
+		})
 	});
 
 	// table filtering
