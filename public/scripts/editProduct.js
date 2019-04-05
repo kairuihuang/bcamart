@@ -17,7 +17,6 @@ $(document).ready(function() {
 	});
 
 	$.get(loadProductStr, (data, status) => {
-		console.log(data);
 
 		// extract & format data
 		const name = data.name;

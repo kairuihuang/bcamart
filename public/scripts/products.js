@@ -42,6 +42,7 @@ $(document).ready(function() {
 				$('tbody').append(row);
 			}
 		}
+		
 		$('.productRow').click((event) => {
 			location = baseURL + event.currentTarget.id;
 		})

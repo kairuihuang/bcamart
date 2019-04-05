@@ -7,6 +7,7 @@ html
 		title Products
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='/css/sortable-theme-bootstrap.css')
 		link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
 
 	body
@@ -14,8 +15,8 @@ html
 		label(for='search') Search:
 		input(class='form-control' id='productSearch' name='search')
 		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Product
-		table(class='table table-hover table-striped')
-			thead(class='thead-dark')
+		table(class='table table-hover table-striped sortable-theme-bootstrap' data-sortable)
+			thead
 				tr
 					th(class='text-left') Department
 					th(class='text-left') Item
@@ -29,4 +30,5 @@ html
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="/js/bootstrap.min.js")
+	script(src="/js/sortable.min.js")
 	script(src="../scripts/products.js")
