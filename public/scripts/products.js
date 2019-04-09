@@ -25,7 +25,10 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
-				// TODO: Table sorting!
+				// FIXME: Markup, quantity, and total value sorting is bugged,
+				//        verify if data entry or display is correct
+				// TODO: If filtering returns no rows, insert filler row displaying
+				//       "no matching values"
 
 				const row =
 					"<tr class='productRow' id='" + id + "'>\
@@ -42,7 +45,7 @@ $(document).ready(function() {
 				$('tbody').append(row);
 			}
 		}
-		
+
 		$('.productRow').click((event) => {
 			location = baseURL + event.currentTarget.id;
 		})
