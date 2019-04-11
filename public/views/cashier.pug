@@ -4,62 +4,6 @@ html
 		link(rel='stylesheet' type='text/css' href='../stylesheets/cashier.css')
 	
 	body
-		div(class = "topnav")
-			a(href="http://localhost:4000/") Home
-			a(class = "active" href="http://localhost:4000/cashier") Cashier
-			a(href="http://localhost:4000/products") Products
-			a(href= "http://localhost:4000/volunteers") Volunteers
-
-		div(class = "rightnone" id = "first" style = {height: "694px"})
-			h3 List of items
-			label Select Item
-			
-			div(class = "content")
-				
-				
-				div(class = "col-sm-6")
-					label Search
-						input(id = "myInput" type="text" placeholder="Search...")
-				
-				div(class = "col-sm-8")
-					table(class = "table" style = {width: 700} id = "selectItem")
-						thead
-							tr
-								th Item Name
-								th Cost
-								th Price
-								th Quantity
-								
-						tbody(id = "myTable")
-
-		div(class = "float-right" style = {height: "694px"} id = "second")
-			h3 Order Details
-
-			div(class = "content")
-
-				table(class = "table" id = "cart")
-					thead
-						tr
-							th(width = "30%") Product Name
-							th(width = "15%") Quantity
-							th(width = "10%") Price
-							th(width = "3%")
-					tbody
-				
-				div
-					label Sub Total
-					span(id = "amount-due" class= "pull-right") $0.00&nbsp
-				div 
-					label Total
-					span(id = "amount-total" class= "pull-right") $0.00&nbsp
-
-				form(id = "process form")
-					div(class = "form-group")
-						input(type = "text" class = "form-control" name placeholder = "Enter Payment" autocomplete= "off")
-					div(class = "form-group")
-						input(readonly= "readonly" type = "text" class = "form-control" name placeholder = "Change" id = "change" autocomplete = "off")
-					div(class = "form-group")
-						button(type = "button" name value = "Process" id = "btn") Process
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")
