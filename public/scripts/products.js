@@ -25,19 +25,14 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
-				// FIXME: Markup, quantity, and total value sorting is bugged,
-				//        verify if data entry or display is correct
-				// TODO: If filtering returns no rows, insert filler row displaying
-				//       "no matching values"
-
 				const row =
 					"<tr class='productRow' id='" + id + "'>\
 						<td class='text'>" + department + "</td>\
 						<td class='text'>" + name + "</td>\
 						<td class='number'>" + cost + "</td>\
 						<td class='number'>" + price + "</td>\
-						<td class='number'>" + margin + "</td>\
-						<td class='number'>" + markup + "</td>\
+						<td class='number'>" + margin + "%</td>\
+						<td class='number'>" + markup + "%</td>\
 						<td class='number'>" + quantity + "</td>\
 						<td class='number'>" + totalVal + "</td>\
 					</tr>";
@@ -49,14 +44,7 @@ $(document).ready(function() {
 		$('.productRow').click((event) => {
 			location = baseURL + event.currentTarget.id;
 		})
+		$('table').DataTable();
 	});
-
-	// table filtering
-	$('#productSearch').on("keyup", function() {
-    	var value = $(this).val().toLowerCase();
-    	$("#productBody tr").filter(function() {
-			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
-  	});
 
 });

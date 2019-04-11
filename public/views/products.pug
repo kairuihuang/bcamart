@@ -7,28 +7,28 @@ html
 		title Products
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
-		link(rel='stylesheet' type='text/css' href='/css/sortable-theme-bootstrap.css')
 		link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
+		link(rel="stylesheet" type="text/css"
+		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
 	body
 		h2 Products Page
-		label(for='search') Search:
-		input(class='form-control' id='productSearch' name='search')
 		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Product
-		table(class='table table-hover table-striped table-bordered sortable-theme-bootstrap' data-sortable)
+		table(class='table table-hover table-striped' id='pTable')
 			thead(class='thead-dark')
 				tr
 					th(class='text-left') Department
 					th(class='text-left') Item
-					th(class='text-left' data-sortable-type='numeric') Cost
-					th(class='text-left' data-sortable-type='numeric') Price
-					th(class='text-left' data-sortable-type='numeric') Margin
-					th(class='text-left' data-sortable-type='numeric') Markup
-					th(class='text-left' data-sortable-type='numeric') Quantity
-					th(class='text-left' data-sortable-type='numeric') Total Value
+					th(class='text-right' data-sortable-type='numeric') Cost
+					th(class='text-right' data-sortable-type='numeric') Price
+					th(class='text-right' data-sortable-type='numeric') Margin
+					th(class='text-right' data-sortable-type='numeric') Markup
+					th(class='text-right' data-sortable-type='numeric') Quantity
+					th(class='text-right' data-sortable-type='numeric') Total Value
 			tbody(id='productBody')
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="/js/bootstrap.min.js")
-	script(src="/js/sortable.min.js")
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js")
 	script(src="../scripts/products.js")
