@@ -1,10 +1,30 @@
 html
 	head
-		link(rel='stylesheet' href='css/bootstrap.min.css')
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		title Cashier screen
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
 		link(rel='stylesheet' type='text/css' href='../stylesheets/cashier.css')
 	
 	body
-
+		div(class='container')
+			div(class='row')
+				div(class='col')
+					table(class='table table-striped' id='cart')
+						thead(class='thead-dark')
+							tr
+								th Item
+								th Price
+								th Quantity
+								th Subtotal
+						tbody(id='cartBody')
+				div(class='col') transaction information div
+			div(class='row')
+				div(class='col' id='pGroup')
+		
+		
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")
 		script(src="../scripts/cashier.js")
