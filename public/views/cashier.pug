@@ -15,12 +15,20 @@ html
 					table(class='table table-striped' id='cart')
 						thead(class='thead-dark')
 							tr
-								th Item
-								th Price
-								th Quantity
-								th Subtotal
+								th(class='text-left') Item
+								th(class='text-right') Price
+								th(class='text-right') Quantity
+								th(class='text-right') Subtotal
 						tbody(id='cartBody')
-				div(class='col') transaction information div
+				div(class='col')
+					div(class='input-group input-group-lg')
+						div(class='input-group-prepend')
+							span(class='input-group-text') Total
+						input(type='text' class='form-control form-control-lg' 
+						      id='total' value='0.00' disabled)
+						div(class='input-group-append')
+							button(class='btn btn-warning btn-lg' id='cashBtn'
+							       type='button') Cash
 			div(class='row')
 				div(class='col' id='pGroup')
 		
