@@ -39,6 +39,7 @@ app.get('/products/addProduct', (req, res) => {
 });
 
 app.get('/products/:id', (req, res) => {
+    // TODO: handle invalid ids, throw 404 error and handle
 	res.render('editProduct', {id: req.params.id});
 });
 
@@ -86,7 +87,7 @@ app.post('/deleteProduct/:id', (req, res) => {
 });
 
 // add product to DB, assumes unique product name
-app.post('/addProductAction', (req, res) => {
+app.post('/addProductAction', async (req, res) => {
 	const reqBody = req.body;
     const name = (reqBody.name).trim();
 	const price = round(parseFloat(reqBody.price.replace('$', '')), 2);
@@ -105,14 +106,13 @@ app.post('/addProductAction', (req, res) => {
     let isActive = false;
     if (reqBody.isActive === 'on') {isActive = true;}
 
-    addProduct(name, price, cost, quantity, department, isActive);
-
+    await addProduct(name, price, cost, quantity, department, isActive);
     res.redirect('http://localhost:4000/products');
 });
 
 app.post('/editProductAction', (req, res) => {
     const reqBody = req.body;
-    const id = reqBody.id;
+    const id = Number(reqBody.id);
     const name = (reqBody.name).trim();
 	const price = round(parseFloat(reqBody.price.replace('$', '')), 2);
 	const cost =  round(parseFloat(reqBody.cost.replace('$', '')), 2);
@@ -381,6 +381,10 @@ async function getDepartmentID_ByName(name) {
     let snap = await ref.once('value');
     const list = snap.val();
 
+    if (list === null) {
+        return -1;
+    }
+
     for (let i = 0; i < list.length; i++) {
         if (name === list[i].name) { return list[i].id; }
     }
@@ -391,6 +395,8 @@ async function getProductID_ByName(name) {
     const ref = database.ref('/products/list');
     let snap = await ref.once('value');
     const list = snap.val();
+
+    if (list === null) { return -1; }
 
     for (let i = 0; i < list.length; i++) {
         if (name === list[i].name) { return list[i].id; }

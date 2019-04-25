@@ -25,16 +25,14 @@ $(document).ready(function() {
 				if (markup >= 100) { markup = markup.toFixed(); }
 				else { markup = markup.toFixed(1); }
 
-				// TODO: Table sorting!
-
 				const row =
 					"<tr class='productRow' id='" + id + "'>\
 						<td class='text'>" + department + "</td>\
 						<td class='text'>" + name + "</td>\
 						<td class='number'>" + cost + "</td>\
 						<td class='number'>" + price + "</td>\
-						<td class='number'>" + margin + "</td>\
-						<td class='number'>" + markup + "</td>\
+						<td class='number'>" + margin + "%</td>\
+						<td class='number'>" + markup + "%</td>\
 						<td class='number'>" + quantity + "</td>\
 						<td class='number'>" + totalVal + "</td>\
 					</tr>";
@@ -42,18 +40,11 @@ $(document).ready(function() {
 				$('tbody').append(row);
 			}
 		}
-		
+
 		$('.productRow').click((event) => {
 			location = baseURL + event.currentTarget.id;
 		})
+		$('table').DataTable();
 	});
-
-	// table filtering
-	$('#productSearch').on("keyup", function() {
-    	var value = $(this).val().toLowerCase();
-    	$("#productBody tr").filter(function() {
-			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
-  	});
 
 });
