@@ -2,6 +2,11 @@ function calculate() {
   	alert("keyup");
  };
 
+function removeButton() {
+	console.log("got here");
+	$(this).remove();
+}
+
 $(document).ready(function(){
   $.get("/loadProducts", (data, status) => {
 		for (let i = 0; i < data.length; i++) {
@@ -27,7 +32,7 @@ $(document).ready(function(){
 		}
 	}).always(function(){
 		$("tbody tr").on("click", function(){
-  		  var row = "<tr><td class = 'text'>" + $(this).children().first().text() + "</td><td>" + "<input type= 'text' class = 'cartinput' onkeyup= 'calculate()'>" + "</td><td class = 'number'>" + $(this).children().eq(2).text() + "<td><button type = 'button'>" + "Remove" + "</button></td>";
+  		  var row = "<tr><td class = 'text'>" + $(this).children().first().text() + "</td><td>" + "<input type= 'text' class = 'cartinput' onkeyup= 'calculate()'>" + "</td><td class = 'number'>" + $(this).children().eq(2).text() + "<td><button type = 'button' onclick = $(this).parent().parent().remove()>" + "Remove" + "</button></td>";
   		  var not_exists = true;
   		  for(i = 1; i < $("#cart tr").length; i++){
   		  	var l = $("#cart tr").get(i);
@@ -58,19 +63,23 @@ $(document).ready(function(){
   	var tbl = $("#cart tr");
   	console.log("here");
   	var total = 0;
+  	var items = new Array();
+
   	if(tbl.length > 1){
   		for(i = 1; i < tbl.length; i++){
   			var l = tbl.get(i);
   			var q = ($(l).children().eq(1).children()[0].value);
   			var p = ($(l).children().eq(2).text())
   			total += (parseInt(q) * parseFloat(p));
+  			items.push($(l).children().first().text());
   		}
 
   		console.log(total);
+  		console.log(items);
   		var volunteer = "anyone";
   		var date = new Date();
-        var timestamp = date.getTime();
-  		$.post("/finalizeTransaction", {'server[]': [total, volunteer, timestamp]});
+        var timestamp = date.getMonth() + "/" + date.getDate() + "/" + (date.getYear() - 100);
+  		$.post("/finalizeTransaction", {'server[]': [total, volunteer, timestamp, items]});
   	}
   })
 });
