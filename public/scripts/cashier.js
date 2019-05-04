@@ -24,12 +24,20 @@ $(document).ready(function(){
             else { updateCart(id, pos, true); }
         });
 
-        // event handler when subtract buttons are clicked
         $('#cart tbody').on('click', '.subtract', (event) => {
             let id = findProductID(event.target.className);
             let pos = isInCart(cart, id);
             updateCart(id, pos, false);
             if (cart[pos].quantity === 0) { removeFromCart(id, pos); }
+        });
+
+        $('#cart tbody').on('click', '.remove', (event) => {
+            let id = findProductID(event.target.className);
+            let pos = isInCart(cart, id);
+            let newTotalPrice = totalPrice - cart[pos].subtotal;
+
+            removeFromCart(id, pos);
+            updateTotalPrice(newTotalPrice);
         });
 
         $('#cashBtn').click((event) => {
@@ -66,12 +74,15 @@ function addToCart(info) {
                    <td class='text-right number price'>" + obj.price.toFixed(2) + "</td>\
                    <td class='text-right number quantity'>" + obj.quantity + "</td>\
                    <td class='text-center'>\
-                       <button type='button'\
-                               class='btn btn-sm btn-danger btn-block subtract "
+                       <button type='button' class='btn btn-info btn-block subtract "
                                + obj.id + "'>-</button>\
                    </td>\
                    <td class='text-right number subtotal'>"
                    + obj.subtotal.toFixed(2) + "</td>\
+                   <td class='text-center'>\
+                       <button type='button' class='btn btn-danger btn-block remove "
+                               + obj.id + "'>X</button>\
+                   </td>\
                </tr>";
     $('#cartBody').append(row);
     updateTotalPrice(obj.price, true);
@@ -112,9 +123,15 @@ function findProductID(classStr) {
 }
 
 function updateTotalPrice(price, isAdding) {
-    let val = price;
-    if (!isAdding) { val *= -1; }
-    totalPrice += val;
+    if (typeof isAdding === 'undefined') {
+        totalPrice = price;
+    }
+    // if overloaded, function increments/decrements totalPrice
+    else {
+        let val = price;
+        if (!isAdding) { val *= -1; }
+        totalPrice += val;
+    }
     $('#total').val(totalPrice.toFixed(2));
 }
 
