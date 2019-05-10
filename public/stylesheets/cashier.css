@@ -10,3 +10,7 @@ div .row { /* for debugging purposes */
 .text {
 	text-align: left;
 }
+
+input {
+	text-align: right;
+}

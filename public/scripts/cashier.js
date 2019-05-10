@@ -2,6 +2,8 @@
 var productList = [];
 var cart = [];
 var totalPrice = 0;
+var discount = 0;
+var subtotal = 0;
 
 $(document).ready(function(){
 
@@ -34,15 +36,15 @@ $(document).ready(function(){
         $('#cart tbody').on('click', '.remove', (event) => {
             let id = findProductID(event.target.className);
             let pos = isInCart(cart, id);
-            let newTotalPrice = totalPrice - cart[pos].subtotal;
+            let newsubtotal = subtotal - cart[pos].subtotal;
 
             removeFromCart(id, pos);
-            updateTotalPrice(newTotalPrice);
+            updateSubtotal(newsubtotal);
         });
 
         $('#cashBtn').click((event) => {
-            // if empty don't cash
-            if (cart.length === 0) {
+            // if no items don't cash, or discount applied to empty cart
+            if (cart.length === 0 || (discount !== 0 && totalPrice < 0) ) {
                 alert('cart is null, can\'t cash');
                 event.preventDefault();
             }
@@ -73,19 +75,19 @@ function addToCart(info) {
                    <td class='text-left text name'>" + obj.name + "</td>\
                    <td class='text-right number price'>" + obj.price.toFixed(2) + "</td>\
                    <td class='text-right number quantity'>" + obj.quantity + "</td>\
+                   <td class='text-right number subtotal'>"
+                   + obj.subtotal.toFixed(2) + "</td>\
                    <td class='text-center'>\
                        <button type='button' class='btn btn-info btn-block subtract "
                                + obj.id + "'>-</button>\
                    </td>\
-                   <td class='text-right number subtotal'>"
-                   + obj.subtotal.toFixed(2) + "</td>\
                    <td class='text-center'>\
                        <button type='button' class='btn btn-danger btn-block remove "
                                + obj.id + "'>X</button>\
                    </td>\
                </tr>";
     $('#cartBody').append(row);
-    updateTotalPrice(obj.price, true);
+    updateSubtotal(obj.price, true);
 }
 
 function removeFromCart(id, pos) {
@@ -103,7 +105,7 @@ function updateCart(id, pos, isAdding) {
     cart[pos].subtotal = cart[pos].quantity * cart[pos].price;
     $('#' + id + ' .quantity').text(cart[pos].quantity);
     $('#' + id + ' .subtotal').text(cart[pos].subtotal.toFixed(2));
-    updateTotalPrice(cart[pos].price, isAdding);
+    updateSubtotal(cart[pos].price, isAdding);
 }
 
 // returns -1 if not found, else returns product object
@@ -122,16 +124,22 @@ function findProductID(classStr) {
     return Number(arr[(arr.length)-1]);
 }
 
-function updateTotalPrice(price, isAdding) {
+function updateSubtotal(price, isAdding) {
     if (typeof isAdding === 'undefined') {
-        totalPrice = price;
+        subtotal = price;
     }
-    // if overloaded, function increments/decrements totalPrice
+    // if overloaded, function increments/decrements subtotal
     else {
         let val = price;
         if (!isAdding) { val *= -1; }
-        totalPrice += val;
+        subtotal += val;
     }
+    $('#subtotal').val(subtotal.toFixed(2));
+    updateTotal();
+}
+
+function updateTotal() {
+    totalPrice = subtotal - discount;
     $('#total').val(totalPrice.toFixed(2));
 }
 
