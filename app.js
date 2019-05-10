@@ -14,6 +14,7 @@ const config = {
 
 firebase.initializeApp(config);
 const database = firebase.database();
+const auth = firebase.auth();
 
 app.set('view engine', 'pug');
 app.set('views','./public/views');
@@ -136,8 +137,41 @@ app.post('/editProductAction', (req, res) => {
 
 // _____________________________________________________________________________
 
+app.post('/loginAuth', (req, res) =>{
+    const reqBody = req.body
+    firebase.auth().signInWithEmailAndPassword(reqBody.server[0], reqBody.server[1]).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            console.log("wrong pass");
+          }
+        });
+});
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user != null) {
+    console.log("not null");
+  } else {
+    console.log("null");
+  }
+});
+
 app.get('/transactions', (req, res) => {
-	res.render('transactions');
+	var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('transactions');
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
 });
 
 app.get('/volunteers', (req, res) => {
@@ -173,12 +207,23 @@ app.post('/finalizeTransaction', (req, res) =>{
 	database.ref("/Transactions/metadata/count").once("value").then((snapshot) => {
 		let id = snapshot.val();
 		console.log(id);
-		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2]); // validate data beforehand
-		database.ref("/Transactions/metadata/").update({count: ++id});
-		database.ref("/Transactions/metadata/").update({newID: count});
+		
+		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2], reqBody.server[3]); // validate data beforehand
+		database.ref('/Transactions/metadata').update({
+        newID: (id + 1),
+        count: (id + 1)
+    });
 	});
+
 	res.redirect("http://localhost:4000/cashier");
 })
+
+app.get('/loadTransactions', (req, res) => {
+	database.ref('/Transactions/list').once('value').then((snap) => {
+		const transactions = snap.val();
+		res.send(transactions);
+	});
+});
 
 app.get('/login', (req, res) =>{
 	res.render('login');
@@ -371,12 +416,13 @@ function addVolunteer(firstName, hours, lastname){
 	});
 }
 
-function finalizeTransaction(id, total, volunteer, timestamp){
+function finalizeTransaction(id, total, volunteer, timestamp, items){
 	database.ref("Transactions/list/" + id).set({
 		id: id,
 		total: total,
 		volunteer: volunteer,
-		timestamp: timestamp
+		timestamp: timestamp,
+		items: items
 	});
 }
 
