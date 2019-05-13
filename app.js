@@ -189,9 +189,6 @@ app.get('/loadVolunteers', (req, res) => {
 	database.ref('/volunteers').once('value').then((snap) => {
 		var volunteers = snap.val();
 		res.send(volunteers);
-		console.log(volunteers);
-		console.log(volunteers[0].email)
-		console.log(volunteers[1].email)
 	});
 });
 
@@ -207,7 +204,6 @@ app.post('/finalizeTransaction', (req, res) =>{
 	database.ref("/Transactions/metadata/count").once("value").then((snapshot) => {
 		let id = snapshot.val();
 		console.log(id);
-		
 		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2], reqBody.server[3]); // validate data beforehand
 		database.ref('/Transactions/metadata').update({
         newID: (id + 1),
