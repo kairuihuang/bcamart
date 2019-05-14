@@ -152,12 +152,9 @@ app.post('/addVolunteer', (req, res) => {
 });
 
 app.get('/loadVolunteers', (req, res) => {
-	database.ref('/volunteers').once('value').then((snap) => {
-		var volunteers = snap.val();
+	database.ref('/volunteers/list').once('value').then((snap) => {
+		var list = snap.val();
 		res.send(volunteers);
-		console.log(volunteers);
-		console.log(volunteers[0].email)
-		console.log(volunteers[1].email)
 	});
 });
 
@@ -165,19 +162,9 @@ app.get('/cashier', (req, res) =>{
 	res.render('cashier');
 })
 
-app.post('/finalizeTransaction', (req, res) =>{
-	console.log("got here");
-	const reqBody = req.body
-	console.log("got here");
-	console.log(reqBody.server[2]);
-	database.ref("/Transactions/metadata/count").once("value").then((snapshot) => {
-		let id = snapshot.val();
-		console.log(id);
-		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2]); // validate data beforehand
-		database.ref("/Transactions/metadata/").update({count: ++id});
-		database.ref("/Transactions/metadata/").update({newID: count});
-	});
-	res.redirect("http://localhost:4000/cashier");
+app.post('/submitTransaction', (req, res) =>{
+	const reqBody = req.body;
+    // update database
 })
 
 app.get('/login', (req, res) =>{

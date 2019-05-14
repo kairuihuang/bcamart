@@ -1,6 +1,8 @@
 // global variables
+const months = ['January, February, March, April, May, June, July, August, September, October, November, December'];
 var productList = [];
 var cart = [];
+var volunteers = [];
 var totalPrice = 0;
 var discount = 0;
 var subtotal = 0;
@@ -42,17 +44,9 @@ $(document).ready(function(){
         });
 
         $('#clearBtn').click((event) => {
+            // TODO: Replace all confirm & alert prompts with modals
             let response = confirm('Are you sure you want to clear the cart and all discounts?');
-            if (response) {
-                cart = [];
-                totalPrice = 0;
-                discount = 0;
-                subtotal = 0;
-                $('#cart tbody').empty();
-                $('#subtotal').val('0.00');
-                $('#discount').val('0.00');
-                $('#total').val('0.00');
-            }
+            if (response) { clearCart(); }
             else {
                 event.preventDefault();
             }
@@ -63,6 +57,11 @@ $(document).ready(function(){
             if (cart.length === 0 || (discount !== 0 && totalPrice < 0) ) {
                 alert('cart is null, can\'t cash');
                 event.preventDefault();
+            }
+            else {
+                submitTransaction();
+                clearCart();
+                // update screen, create toast notification
             }
         })
 
@@ -159,6 +158,17 @@ function updateTotal() {
     $('#total').val(totalPrice.toFixed(2));
 }
 
+function clearCart() {
+    cart = [];
+    totalPrice = 0;
+    discount = 0;
+    subtotal = 0;
+    $('#cart tbody').empty();
+    $('#subtotal').val('0.00');
+    $('#discount').val('0.00');
+    $('#total').val('0.00');
+}
+
 function loadProductBtns(data) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].isActive) {
@@ -170,4 +180,92 @@ function loadProductBtns(data) {
                             productList[i].id + "'>" + productList[i].name;
         $('#pGroup').append(html);
     }
+}
+
+function submitTransaction() {
+    let volunteers = createVolunteersObj();
+    let items = createItemsObj();
+    let timestamp = generateTimestamp();
+    let id = Date.now();
+
+    let transaction = {
+        id: id,
+        timestamp: timestamp,
+        volunteers: volunteers,
+        items: items,
+        grossTotal: subtotal,
+        discount: discount,
+        netTotal: totalPrice
+    }
+
+    $.post('/submitTransaction', transaction);
+}
+
+function generateTimestamp() {
+    let milliseconds = Date.now();
+    let dateObj = new Date(milliseconds);
+
+    let year = dateObj.getFullYear();
+    let month = dateObj.getMonth() + 1;
+    let date = dateObj.getDate();
+    let day = dateObj.getDay();
+
+    let monthStr = months[month - 1];
+
+    let hour = dateObj.getHours();
+    let minutes = dateObj.getMinutes();
+    let seconds = dateObj.getSeconds();
+
+    // stuff for formatting time
+    let twelveHour = ((hour + 11) % 12 + 1);
+    let timeOfDay = 'PM';
+    if (hour > 12) { timeOfDay = 'AM'; }
+    let formattedTime = twelveHour + ':' + minutes + ':' + seconds + ' ' + timeOfDay;
+
+    // stuff for formatting date
+    let mm;
+    let dd;
+    if (month < 10) { mm = '0'  + month; }
+    if (date < 10) { dd = '0' + date; }
+    let formattedDate = mm + '/' + dd + '/' + year;
+
+    let timestamp = {
+        year: year,
+        month: month,
+        monthStr: monthStr,
+        date: date,
+        day: day,
+        hour: hour,
+        minutes: minutes,
+        seconds: seconds,
+        formattedTime: formattedTime,
+        formattedDate: formattedDate,
+    }
+
+    return timestamp;
+}
+
+function createVolunteersObj() {
+    let list = [];
+    for (let i = 0; i < volunteers.length; i++) {
+        list[i] = {
+            id: volunteers[i].id,
+            name: volunteers[i].name
+        };
+    }
+    return list;
+}
+
+function createItemsObj() {
+    let list = [];
+    for (let i = 0; i < cart.length; i++) {
+        list[i] = {
+            id: cart[i].id,
+            name: cart[i].name,
+            price: cart[i].price,
+            quantity: cart[i].quantity,
+            subtotal: cart[i].subtotal
+        }
+    }
+    return list;
 }
