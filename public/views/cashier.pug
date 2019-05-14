@@ -43,6 +43,13 @@ html
 			div(class='row')
 				div(class='col' id='pGroup')
 		
+		// toast appears when transaction is submitted
+		div(class='toast' id='transactionToast' data-delay='3000')
+			div(class='toast-header')
+				strong(class='mr-auto') Alert
+				small now
+			div(class='toast-body') Transaction has been processed
+		
 		
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")

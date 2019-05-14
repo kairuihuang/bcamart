@@ -164,6 +164,7 @@ app.get('/cashier', (req, res) =>{
 
 app.post('/submitTransaction', (req, res) =>{
 	const reqBody = req.body;
+    res.end();
     // update database
 })
 

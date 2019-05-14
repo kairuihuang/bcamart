@@ -55,16 +55,15 @@ $(document).ready(function(){
         $('#cashBtn').click((event) => {
             // if no items don't cash, or discount applied to empty cart
             if (cart.length === 0 || (discount !== 0 && totalPrice < 0) ) {
-                alert('cart is null, can\'t cash');
+                alert('cart is empty, can\'t cash');
                 event.preventDefault();
             }
             else {
                 submitTransaction();
                 clearCart();
-                // update screen, create toast notification
+                $('#transactionToast').toast('show');
             }
-        })
-
+        });
     });
 });
 
