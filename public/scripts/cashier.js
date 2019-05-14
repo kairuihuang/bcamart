@@ -9,7 +9,6 @@ $(document).ready(function(){
 
     $.get('/loadProducts', (data, status) => {
         loadProductBtns(data);
-        console.log(productList);
 
         // event handler when product buttons are clicked
         $('.item').click((event) => {
@@ -20,7 +19,7 @@ $(document).ready(function(){
             if (pos === -1) {
                 let info = searchProductByID(productList, id);
                 if (info !== -1) { addToCart(info); }
-                else { console.log('product not found'); }
+                else { alert('product not found'); }
             }
             // update quantity and subtotal of exisiting row
             else { updateCart(id, pos, true); }
@@ -40,6 +39,23 @@ $(document).ready(function(){
 
             removeFromCart(id, pos);
             updateSubtotal(newsubtotal);
+        });
+
+        $('#clearBtn').click((event) => {
+            let response = confirm('Are you sure you want to clear the cart and all discounts?');
+            if (response) {
+                cart = [];
+                totalPrice = 0;
+                discount = 0;
+                subtotal = 0;
+                $('#cart tbody').empty();
+                $('#subtotal').val('0.00');
+                $('#discount').val('0.00');
+                $('#total').val('0.00');
+            }
+            else {
+                event.preventDefault();
+            }
         });
 
         $('#cashBtn').click((event) => {
