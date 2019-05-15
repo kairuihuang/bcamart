@@ -1,5 +1,6 @@
 // global variables
-const months = ['January, February, March, April, May, June, July, August, September, October, November, December'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var productList = [];
 var cart = [];
 var volunteers = [];
@@ -182,9 +183,10 @@ function loadProductBtns(data) {
 }
 
 function submitTransaction() {
-    let volunteers = createVolunteersObj();
     let items = createItemsObj();
     let timestamp = generateTimestamp();
+    let volunteers = createVolunteersObj();
+    if (volunteers.length == 0) { volunteers = 'None'; }
     let id = Date.now();
 
     let transaction = {
@@ -197,7 +199,8 @@ function submitTransaction() {
         netTotal: totalPrice
     }
 
-    $.post('/submitTransaction', transaction);
+    let jsonStr = JSON.stringify(transaction);
+    $.post('/submitTransaction', {jsonStr});
 }
 
 function generateTimestamp() {
@@ -210,23 +213,32 @@ function generateTimestamp() {
     let day = dateObj.getDay();
 
     let monthStr = months[month - 1];
+    let dayStr = daysOfWeek[day];
 
     let hour = dateObj.getHours();
     let minutes = dateObj.getMinutes();
     let seconds = dateObj.getSeconds();
 
     // stuff for formatting time
-    let twelveHour = ((hour + 11) % 12 + 1);
+    let minmin = minutes;
+    let ss = seconds;
+    if (minutes < 10) { minmin = '0' + minutes; }
+    if (seconds < 10) { ss = '0' + seconds; }
+
+    let hh = ((hour + 11) % 12 + 1); // convert to 12 hr time
+    if (hh < 10) {hh = '0' + hh; }
+
     let timeOfDay = 'PM';
-    if (hour > 12) { timeOfDay = 'AM'; }
-    let formattedTime = twelveHour + ':' + minutes + ':' + seconds + ' ' + timeOfDay;
+    if (hour < 12) { timeOfDay = 'AM'; }
+
+    let formattedTime = hh + ':' + minmin + ':' + ss + ' ' + timeOfDay;
 
     // stuff for formatting date
-    let mm;
-    let dd;
-    if (month < 10) { mm = '0'  + month; }
+    let monmon = month;
+    let dd = date;
+    if (month < 10) { monmon = '0'  + month; }
     if (date < 10) { dd = '0' + date; }
-    let formattedDate = mm + '/' + dd + '/' + year;
+    let formattedDate = monmon + '/' + dd + '/' + year;
 
     let timestamp = {
         year: year,
@@ -234,6 +246,7 @@ function generateTimestamp() {
         monthStr: monthStr,
         date: date,
         day: day,
+        dayStr: dayStr,
         hour: hour,
         minutes: minutes,
         seconds: seconds,
