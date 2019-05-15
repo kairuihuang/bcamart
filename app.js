@@ -205,13 +205,6 @@ app.post('/submitTransaction', (req, res) => {
     res.end();
 });
 
-app.get('/loadTransactions', (req, res) => {
-	database.ref('/Transactions/list').once('value').then((snap) => {
-		const transactions = snap.val();
-		res.send(transactions);
-	});
-});
-
 app.get('/login', (req, res) =>{
 	res.render('login');
 });
@@ -397,14 +390,16 @@ async function recordTransaction(obj) {
     // for the transactions DB
     database.ref('/transactions/list/' + obj.id).set(obj);
 
-    let ref = database.ref('/transactions/count/');
+    let ref = database.ref('/transactions/count');
     let snap = await ref.once('value');
     let count = snap.val();
-    ref.update(count + 1);
+
+    ref = database.ref('/transactions');
+    ref.update( {count: count + 1} );
 
     // for each volunteer
     let volunteers = obj.volunteers;
-    if (volunteers.length > 1) {
+    if (volunteers.length === 'None') {
         for (let i = 0; i < volunteers.length; i++) {
             ref = database.ref('/volunteers/list/' + volunteers.id + '/list/' + obj.id);
             ref.set(obj);
@@ -421,10 +416,12 @@ async function updateInventory(items) {
         let oldQuant = product.quantity;
         ref = database.ref('/products/list/' + items[i].id + '/quantity');
         let newQuant = oldQuant - items[i].quantity;
-        ref.update(newQuant);
 
-        ref = database.ref('/products/list/' + items[i].id + '/totalValue');
-        ref.update(newQuant * product.cost);
+        ref = database.ref('/products/list/' + items[i].id);
+        ref.update({
+            quantity: newQuant,
+            totalValue: newQuant * product.cost
+        });
     }
 }
 
