@@ -1,25 +1,20 @@
-html
-	head
+head
 		link(rel='stylesheet' href='css/bootstrap.min.css')
-		link(rel='stylesheet' type='text/css' href='../stylesheets/login.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/code.css')
 
 		link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
 		link(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous')
 
 	body
 		div(class = 'login')
-			h2 Sign in
+			h2 Enter Student Code
 			input(name='username' placeholder='Username' type='text' input id = 'user')
-			input(input id='pw' name='password' placeholder='Password' type='password')
-		
 
 
 			div
 				input(type='submit' value='Sign in' onclick = "login();")
-				a(class = 'forgot' href= '#') Forgot your password?
 
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="js/bootstrap.min.js")
-		script(src="../scripts/login.js")
-
+		script(src="../scripts/code.js")

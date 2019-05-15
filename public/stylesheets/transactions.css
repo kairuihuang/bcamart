@@ -1,4 +1,16 @@
-h1: {
-	color: blue;
-	background-color: yellow;
+tr a, tr a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+td:hover {
+	cursor: pointer;
+}
+
+.number {
+	text-align: right;
+}
+
+.text {
+	text-align: left;
 }

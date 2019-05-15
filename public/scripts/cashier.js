@@ -9,7 +9,7 @@ var discount = 0;
 var subtotal = 0;
 
 $(document).ready(function(){
-
+  
     $.get('/loadProducts', (data, status) => {
         loadProductBtns(data);
 
