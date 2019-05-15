@@ -1,66 +1,56 @@
 html
 	head
-		link(rel='stylesheet' href='css/bootstrap.min.css')
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		title Cashier screen
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
 		link(rel='stylesheet' type='text/css' href='../stylesheets/cashier.css')
 	
 	body
-		div(class = "topnav")
-			a(href="http://localhost:4000/") Home
-			a(class = "active" href="http://localhost:4000/cashier") Cashier
-			a(href="http://localhost:4000/products") Products
-			a(href= "http://localhost:4000/volunteers") Volunteers
-
-		div(class = "rightnone" id = "first" style = {height: "694px"})
-			h3 List of items
-			label Select Item
-			
-			div(class = "content")
-				
-				
-				div(class = "col-sm-6")
-					label Search
-						input(id = "myInput" type="text" placeholder="Search...")
-				
-				div(class = "col-sm-8")
-					table(class = "table" style = {width: 700} id = "selectItem")
-						thead
+		div(class='container-fluid')
+			div(class='row')
+				div(class='col-8')
+					table(class='table table-striped' id='cart')
+						thead(class='thead-dark')
 							tr
-								th Item Name
-								th Cost
-								th Price
-								th Quantity
-								
-						tbody(id = "myTable")
-
-		div(class = "float-right" style = {height: "694px"} id = "second")
-			h3 Order Details
-
-			div(class = "content")
-
-				table(class = "table" id = "cart")
-					thead
-						tr
-							th(width = "30%") Product Name
-							th(width = "15%") Quantity
-							th(width = "10%") Price
-							th(width = "3%")
-					tbody
-				
-				div
-					label Sub Total
-					span(id = "amount-due" class= "pull-right") $0.00&nbsp
-				div 
-					label Total
-					span(id = "amount-total" class= "pull-right") $0.00&nbsp
-
-				form(id = "process form")
-					div(class = "form-group")
-						input(type = "text" class = "form-control" name placeholder = "Enter Payment" autocomplete= "off")
-					div(class = "form-group")
-						input(readonly= "readonly" type = "text" class = "form-control" name placeholder = "Change" id = "change" autocomplete = "off")
-					div(class = "form-group")
-						button(type = "button" name value = "Process" id = "btn") Process
-
+								th(class='text-left') Item
+								th(class='text-right') Price
+								th(class='text-right') Quantity
+								th(class='text-right') Subtotal
+								th(class='text-center') Subtract
+								th(class='text-center') Remove
+						tbody(id='cartBody')
+				div(class='col')
+					div(class='input-group input-group-lg')
+						div(class='input-group-prepend')
+							span(class='input-group-text') Subtotal
+						input(type='text' class='form-control form-control-lg' id='subtotal' value='0.00' disabled)
+					div(class='input-group input-group-lg')
+						div(class='input-group-prepend')
+							span(class='input-group-text') Discount
+						input(type='text' class='form-control form-control-lg' id='discount' value='0.00' disabled)
+					div(class='input-group input-group-lg')
+						div(class='input-group-prepend')
+							span(class='input-group-text') Total
+						input(type='text' class='form-control form-control-lg' id='total' value='0.00' disabled)
+					div(class='btn-group')
+						button(type='button' class='btn btn-danger btn-lg' id='clearBtn') Clear
+						button(type='button' class='btn btn-info btn-lg' id='discountBtn') Discount
+						button(type='button' class='btn btn-warning btn-lg'
+						       id='cashBtn') Cash
+			div(class='row')
+				div(class='col' id='pGroup')
+		
+		// toast appears when transaction is submitted
+		div(class='toast' id='transactionToast' data-delay='3000')
+			div(class='toast-header')
+				strong(class='mr-auto') Alert
+				small now
+			div(class='toast-body') Transaction has been processed
+		
+		
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="/js/bootstrap.min.js")
 		script(src="../scripts/cashier.js")
