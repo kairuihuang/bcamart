@@ -399,7 +399,7 @@ async function recordTransaction(obj) {
 
     // for each volunteer
     let volunteers = obj.volunteers;
-    if (volunteers.length === 'None') {
+    if (volunteers.length !== 'None') {
         for (let i = 0; i < volunteers.length; i++) {
             ref = database.ref('/volunteers/list/' + volunteers.id + '/list/' + obj.id);
             ref.set(obj);
