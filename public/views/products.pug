@@ -12,20 +12,21 @@ html
 		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
 	body
-		h2 Products Page
-		a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Product
-		table(class='table table-hover table-striped' id='pTable')
-			thead(class='thead-dark')
-				tr
-					th(class='text-left') Department
-					th(class='text-left') Item
-					th(class='text-right' data-sortable-type='numeric') Cost
-					th(class='text-right' data-sortable-type='numeric') Price
-					th(class='text-right' data-sortable-type='numeric') Margin
-					th(class='text-right' data-sortable-type='numeric') Markup
-					th(class='text-right' data-sortable-type='numeric') Quantity
-					th(class='text-right' data-sortable-type='numeric') Total Value
-			tbody(id='productBody')
+		div(class='container')
+			h2 Products Page
+			a(href='http://localhost:4000/products/addProduct' class='btn btn-secondary') Add Product
+			table(class='table table-hover table-striped' id='pTable')
+				thead(class='thead-dark')
+					tr
+						th(class='text-left') Department
+						th(class='text-left') Item
+						th(class='text-right') Cost
+						th(class='text-right') Price
+						th(class='text-right') Margin
+						th(class='text-right') Markup
+						th(class='text-right') Quantity
+						th(class='text-right') Total Value
+				tbody(id='productBody')
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="/js/bootstrap.min.js")

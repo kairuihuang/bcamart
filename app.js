@@ -21,7 +21,6 @@ app.set('views','./public/views');
 
 app.use(express.static('public'));
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 
@@ -242,12 +241,9 @@ app.post('/addVolunteer', (req, res) => {
 });
 
 app.get('/loadVolunteers', (req, res) => {
-	database.ref('/volunteers').once('value').then((snap) => {
-		var volunteers = snap.val();
+	database.ref('/volunteers/list').once('value').then((snap) => {
+		var list = snap.val();
 		res.send(volunteers);
-		console.log(volunteers);
-		console.log(volunteers[0].email)
-		console.log(volunteers[1].email)
 	});
 });
 
@@ -261,43 +257,28 @@ app.get('/cashier', (req, res) =>{
         console.log('not logged in')
         res.render('/');
     }
-})
+});
 
-app.post('/finalizeTransaction', (req, res) =>{
-	console.log("got here");
-	const reqBody = req.body
-	console.log("got here");
-	console.log(reqBody.server[2]);
-	database.ref("/Transactions/metadata/count").once("value").then((snapshot) => {
-		let id = snapshot.val();
-		console.log(id);
-		
-		finalizeTransaction(id, reqBody.server[0], reqBody.server[1], reqBody.server[2], reqBody.server[3]); // validate data beforehand
-		database.ref('/Transactions/metadata').update({
-        newID: (id + 1),
-        count: (id + 1)
-    });
-	});
 
-	res.redirect("http://localhost:4000/cashier");
-})
+app.post('/submitTransaction', (req, res) => {
+	const reqBody = req.body;
+    const obj = JSON.parse(reqBody.jsonStr);
 
-app.get('/loadTransactions', (req, res) => {
-	database.ref('/Transactions/list').once('value').then((snap) => {
-		const transactions = snap.val();
-		res.send(transactions);
-	});
+    recordTransaction(obj);
+    updateInventory(obj.items);
+
+    res.end();
 });
 
 app.get('/login', (req, res) =>{
 	res.render('login');
-})
+});
 
 app.get('/authenticate_user', (req, res) =>{
 	console.log("got here");
 	const reqBody = req.body
 	console.log(reqBody);
-})
+});
 
 
 // 8) internal functions _______________________________________________________
@@ -468,6 +449,47 @@ async function getProductID_ByName(name) {
     return -1;
 }
 
+// _____________________________________________________________________________
+
+async function recordTransaction(obj) {
+    // for the transactions DB
+    database.ref('/transactions/list/' + obj.id).set(obj);
+
+    let ref = database.ref('/transactions/count');
+    let snap = await ref.once('value');
+    let count = snap.val();
+
+    ref = database.ref('/transactions');
+    ref.update( {count: count + 1} );
+
+    // for each volunteer
+    let volunteers = obj.volunteers;
+    if (volunteers.length !== 'None') {
+        for (let i = 0; i < volunteers.length; i++) {
+            ref = database.ref('/volunteers/list/' + volunteers.id + '/list/' + obj.id);
+            ref.set(obj);
+        }
+    }
+}
+
+async function updateInventory(items) {
+    for (let i = 0; i < items.length; i++) {
+        let ref = database.ref('/products/list/' + items[i].id);
+        let snap = await ref.once('value');
+        let product = snap.val();
+
+        let oldQuant = product.quantity;
+        ref = database.ref('/products/list/' + items[i].id + '/quantity');
+        let newQuant = oldQuant - items[i].quantity;
+
+        ref = database.ref('/products/list/' + items[i].id);
+        ref.update({
+            quantity: newQuant,
+            totalValue: newQuant * product.cost
+        });
+    }
+}
+
 function addVolunteer(firstName, hours, lastname){
 	database.ref('/volunteers').once('value').then((snap) => {
 		var volunteers = snap.val();
@@ -477,16 +499,6 @@ function addVolunteer(firstName, hours, lastname){
 			hours: hours
 			lastName: lastName
 		}
-	});
-}
-
-function finalizeTransaction(id, total, volunteer, timestamp, items){
-	database.ref("Transactions/list/" + id).set({
-		id: id,
-		total: total,
-		volunteer: volunteer,
-		timestamp: timestamp,
-		items: items
 	});
 }
 
