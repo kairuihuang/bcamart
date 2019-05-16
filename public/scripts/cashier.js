@@ -3,7 +3,7 @@ function calculate() {
  };
 
 function removeButton() {
-	console.log("got here");
+	
 	$(this).remove();
 }
 

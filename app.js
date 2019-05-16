@@ -31,16 +31,54 @@ app.get('/', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-	res.render('products');
+    var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('products');
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
 });
 
 app.get('/products/addProduct', (req, res) => {
-	res.render('addProduct');
+	var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('addProduct');
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
+    
 });
 
 app.get('/products/:id', (req, res) => {
     // TODO: handle invalid ids, throw 404 error and handle
-	res.render('editProduct', {id: req.params.id});
+	var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('editProduct', {id: req.params.id});
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
+
 });
 
 // 3) Product page actions _____________________________________________________
@@ -137,26 +175,32 @@ app.post('/editProductAction', (req, res) => {
 
 // _____________________________________________________________________________
 
-app.post('/loginAuth', (req, res) =>{
-    const reqBody = req.body
-    firebase.auth().signInWithEmailAndPassword(reqBody.server[0], reqBody.server[1]).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            console.log("wrong pass");
-          }
-        });
-});
+app.post('/loginAuth', (req, res) => {
+    const reqBody = req.body;
+    console.log(reqBody.server[0]);
+    firebase.auth().signInWithEmailAndPassword(reqBody.server[0], reqBody.server[1]).then( function onSuccess()
+        {
+            if(firebase.auth().currentUser.email == "admin@bergen.org"){
+                res.send("/products");
+            }
+            if(firebase.auth().currentUser.email == "student@bergen.org"){
+                res.send("/cashier");
+            }
+        })
+    .catch( function onFailure(err)
+        {res.send("/");});
+    });
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user != null) {
     console.log("not null");
-  } else {
+  }
+ else {
     console.log("null");
   }
 });
+
+
 
 app.get('/transactions', (req, res) => {
 	var user = firebase.auth().currentUser;
@@ -175,7 +219,19 @@ app.get('/transactions', (req, res) => {
 });
 
 app.get('/volunteers', (req, res) => {
-	res.render('volunteers');
+	var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('volunteers');
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
 });
 
 app.post('/addVolunteer', (req, res) => {
@@ -196,7 +252,15 @@ app.get('/loadVolunteers', (req, res) => {
 });
 
 app.get('/cashier', (req, res) =>{
-	res.render('cashier');
+	var user = firebase.auth().currentUser;
+
+    if(user){
+        res.render('cashier');
+    }
+    else{
+        console.log('not logged in')
+        res.render('/');
+    }
 })
 
 app.post('/finalizeTransaction', (req, res) =>{
@@ -430,6 +494,9 @@ function round(value, decimals) {
 	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
+function handleRedirect(req , res) {
+    res.redirect('/products');
+}
 // const port = process.env.PORT || 4000;
 app.listen(4000, () => {
 	console.log('Listening on port 4000...');
