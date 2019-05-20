@@ -9,7 +9,7 @@ var discount = 0;
 var subtotal = 0;
 
 $(document).ready(function(){
-  
+
     $.get('/loadProducts', (data, status) => {
         loadProductBtns(data);
 
@@ -64,6 +64,14 @@ $(document).ready(function(){
                 clearCart();
                 $('#transactionToast').toast('show');
             }
+        });
+
+        $('#clockBtn').click((event) => {
+            $('#clockModal').modal('show');
+        });
+
+        $('#closeClockModal').click((event) => {
+            $('#clockModal').modal('hide');
         });
     });
 });

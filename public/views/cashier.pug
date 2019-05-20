@@ -10,8 +10,11 @@ html
 	
 	body
 		div(class='container-fluid')
+			nav(class='navbar navbar-light sticky-top' style='background-color: #e3f2fd;')
+				span(class='navbar-brand') BCA Mart Point of Sale
+				button(class='button btn-danger') Logout
 			div(class='row')
-				div(class='col-8')
+				div(class='col-7')
 					table(class='table table-striped' id='cart')
 						thead(class='thead-dark')
 							tr
@@ -36,10 +39,10 @@ html
 							span(class='input-group-text') Total
 						input(type='text' class='form-control form-control-lg' id='total' value='0.00' disabled)
 					div(class='btn-group')
-						button(type='button' class='btn btn-danger btn-lg' id='clearBtn') Clear
+						button(type='button' class='btn btn-primary btn-lg' id='clockBtn' data-toggle="modal") Hours
 						button(type='button' class='btn btn-info btn-lg' id='discountBtn') Discount
-						button(type='button' class='btn btn-warning btn-lg'
-						       id='cashBtn') Cash
+						button(type='button' class='btn btn-danger btn-lg' id='clearBtn') Clear
+						button(type='button' class='btn btn-warning btn-lg' id='cashBtn') Cash
 			div(class='row')
 				div(class='col' id='pGroup')
 		
@@ -49,6 +52,24 @@ html
 				strong(class='mr-auto') Alert
 				small now
 			div(class='toast-body') Transaction has been processed
+		
+		// modals
+		div(class='modal' id='clockModal' role='dialog')
+			div(class='modal-dialog' role='document')
+				div(class='modal-content')
+					div(class='modal-header')
+						h4(class='modal-title') Volunteer hours 
+						button(type='button' class='close' data-dismiss='modal')
+					div(class='modal-body')
+						h6 Volunteers on current shift:
+						form
+							div(class='form-group')
+								label(for='code' class='col-form-label') Enter code:
+								input(type='text' class='form-control' id='volunteerInput' name='code')
+					div(class='modal-footer')
+						button(type='button' class='btn btn-success btn-large' id='clockInBtn') Clock in
+						button(type='button' class='btn btn-info btn-large' id='clockOutBtn') Clock out
+						button(type='button' class='btn btn-secondary btn-large' id='closeClockModal') Close
 		
 		
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
