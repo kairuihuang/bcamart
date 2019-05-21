@@ -517,7 +517,7 @@ async function updateInventory(items) {
         ref = database.ref('/products/list/' + items[i].id);
         ref.update({
             quantity: newQuant,
-            totalValue: newQuant * product.cost
+            totalValue: round(newQuant*product.cost, 2)
         });
     }
 }
