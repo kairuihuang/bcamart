@@ -11,6 +11,10 @@ div .row { /* for debugging purposes */
 	text-align: left;
 }
 
-input {
+.register input {
 	text-align: right;
+}
+
+#volunteerInput {
+	text-align: left;
 }
