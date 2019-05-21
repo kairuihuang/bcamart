@@ -215,6 +215,38 @@ app.get('/transactions', (req, res) => {
     }
 });
 
+app.get('/transactions/:id', (req, res) => {
+    var user = firebase.auth().currentUser;
+
+    if(user){
+        if(user.email == "student@bergen.org"){
+            res.redirect('/');
+        }
+        if(user.email == "admin@bergen.org"){
+            res.render('viewTransaction', {id: req.params.id});
+        }
+    } else {
+        console.log("not logged in");
+        res.redirect('/');
+    }
+});
+
+
+app.get('/loadTransactions', (req, res) => {
+    database.ref('/transactions/list').once('value').then((snap) => {
+        const transactions = snap.val();
+        res.send(transactions);
+    });
+})
+
+
+app.get('/loadTransactions/:id', (req, res) => {
+    database.ref('/transactions/list/' + req.params.id).once('value').then((snap) => {
+        const transactions = snap.val();
+        res.send(transactions);
+    });
+});
+
 app.get('/volunteers', (req, res) => {
 	var user = firebase.auth().currentUser;
 

@@ -1,24 +1,30 @@
 $(document).ready(function(){
+  const baseURL = 'http://localhost:4000/transactions/';
   $.get("/loadTransactions", (data, status) => {
-		for (let i = 0; i < data.length; i++) {
-			if (data[i] != null) {
-				var id = data[i].id;
-				var items = data[i].items;
-				var timestamp = data[i].timestamp;
-				var total = data[i].total;
-				var volunteer = data[i].volunteer;
+  		
+		for (var info in data) {
+			if (data[info] != null) {
+
+				var timestamp = data[info].timestamp.formattedDate + " " + data[info].timestamp.formattedTime;
+				var total = data[info].netTotal;
+				var discount = data[info].discount;
+				var volunteer = data[info].volunteers;
 
 
 				
 
-				const row = "<tr><td class='text'><a>" + id +
-						  "</a></td><td class='text'><a>" + items +
-						  "</a></td><td class='text'><a>" + timestamp +
+				const row = "<tr class = 'transactionRow' id='" + info + "'>\
+						   <td class='text'><a>" + timestamp +
 						  "</a></td><td class='text'><a>" + total +
-						  "</a></td><td class='text'><a>" + volunteer;
+						  "</a></td><td class='text'><a>" + discount +
+						  "</a></td><td class='text'><a>" +  volunteer;
 				
-				$("#myTable").append(row);
+				$("#transactionBody").append(row);
 			}
 		}
+		$('.transactionRow').click((event) => {
+			location = baseURL + event.currentTarget.id;
+		})
+		$('table').DataTable();
 	});
 });

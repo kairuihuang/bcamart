@@ -1,23 +1,33 @@
 html
 	head
-		link(rel='stylesheet' href='css/bootstrap.min.css')
-		link(rel='stylesheet' type='text/css' href='../stylesheets/transactions.css')
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
 
-		link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
-		link(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous')
+		title Transactions
+
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/transactions.css')
+		link(rel="stylesheet" type="text/css"
+		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
 	body
-		table(class='table table-hover table-striped sortable-theme-bootstrap' data-sortable)
-						thead
+		div(class = 'container')
+			h2 Transactions Page
+			table(class='table table-hover table-striped' id='tTable')
+						thead(class = 'thead-dark')
 							tr
-								th id
-								th Items
-								th Timestamp
-								th Total
+								th Date
+								th Net Total
+								th Discount
 								th Volunteers
-								
-						tbody(id = "myTable")
+
+						tbody(id = "transactionBody")
 	
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="js/bootstrap.min.js")
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js")
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-de.js")
 	script(src="../scripts/transactions.js")
