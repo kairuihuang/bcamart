@@ -55,8 +55,12 @@ $(document).ready(function(){
 
         $('#cashBtn').click((event) => {
             // if no items don't cash, or discount applied to empty cart
-            if (cart.length === 0 || (discount !== 0 && totalPrice < 0) ) {
-                alert('cart is empty, can\'t cash');
+            if (cart.length === 0) {
+                alert('Cannot cash cart when empty.');
+                event.preventDefault();
+            }
+            else if (discount !== 0 && totalPrice < 0) {
+                alert('Cannot cash cart when total price is less than $0.00.');
                 event.preventDefault();
             }
             else {
@@ -89,40 +93,44 @@ $(document).ready(function(){
 
         $('#clockInBtn').click((event) => {
             let code = $('#volunteerInput').val();
-            $.get('/getVolunteer/' + code, (data, status) => {
-                if (data === null || data === '') {
-                    alert('Unable to find volunteer with code entered. Please try again.');
-                }
-                else {
-                    let index = findVolunteerIndexByCode(data.code);
-                    if (index !== -1) {
-                        alert(data.firstName + ' ' + data.lastName + ' is already clocked in.');
+            if (code !== null && code !== '') {
+                $.get('/getVolunteer/' + code, (data, status) => {
+                    if (data === null || data === '') {
+                        alert('Unable to find volunteer with code entered. Please try again.');
                     }
                     else {
-                        clockInVolunteer(data);
-                        alert(data.firstName + ' has been clocked in. Please remember to clock out at the end of your shift to log your hours.');
+                        let index = findVolunteerIndexByCode(data.code);
+                        if (index !== -1) {
+                            alert(data.firstName + ' ' + data.lastName + ' is already clocked in.');
+                        }
+                        else {
+                            clockInVolunteer(data);
+                            alert(data.firstName + ' has been clocked in. Please remember to clock out at the end of your shift to log your hours.');
+                        }
                     }
-                }
-            });
+                });
+            }
         });
 
         $('#clockOutBtn').click((event) => {
             let code = $('#volunteerInput').val();
-            $.get('/getVolunteer/' + code, (data, status) => {
-                if (data === null || data === '') {
-                    alert('Unable to find volunteer with code entered. Please try again.');
-                }
-                else {
-                    let index = findVolunteerIndexByCode(data.code);
-                    if (index === -1) {
-                        alert('Volunteer entered is not currently clocked in.');
+            if (code !== null && code !== '') {
+                $.get('/getVolunteer/' + code, (data, status) => {
+                    if (data === null || data === '') {
+                        alert('Unable to find volunteer with code entered. Please try again.');
                     }
                     else {
-                        clockOutVolunteer(index);
-                        alert(data.firstName + ' ' + data.lastName + ' has been clocked out.');
+                        let index = findVolunteerIndexByCode(data.code);
+                        if (index === -1) {
+                            alert('Volunteer entered is not currently clocked in.');
+                        }
+                        else {
+                            clockOutVolunteer(index);
+                            alert(data.firstName + ' ' + data.lastName + ' has been clocked out.');
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     });
 });

@@ -289,7 +289,7 @@ app.post('/addVolunteer', (req, res) => {
 app.get('/loadVolunteers', (req, res) => {
 	database.ref('/volunteers/list').once('value').then((snap) => {
 		var list = snap.val();
-		res.send(volunteers);
+		res.send(list);
 	});
 });
 
