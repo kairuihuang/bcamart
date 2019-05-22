@@ -59,7 +59,7 @@ app.get('/products/addProduct', (req, res) => {
         console.log("not logged in");
         res.redirect('/');
     }
-    
+
 });
 
 app.get('/products/:id', (req, res) => {
@@ -199,8 +199,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-
-
 app.get('/transactions', (req, res) => {
 	var user = firebase.auth().currentUser;
 
@@ -265,6 +263,22 @@ app.get('/volunteers', (req, res) => {
     }
 });
 
+app.get('/getVolunteer/:code', (req, res) => {
+    database.ref('/volunteers/list/' + req.params.code).once('value').then((snap) => {
+        const volunteer = snap.val();
+        res.send(volunteer);
+    });
+});
+
+app.post('/logShift', (req, res) => {
+    const reqBody = req.body;
+    const volunteer = JSON.parse(reqBody.jsonStr);
+
+    logShift(volunteer);
+
+    res.end();
+});
+
 app.post('/addVolunteer', (req, res) => {
 	console.log(reqBody);
 	const reqBody = req.body;
@@ -279,7 +293,7 @@ app.get('/loadVolunteers', (req, res) => {
 	});
 });
 
-app.get('/cashier', (req, res) =>{
+app.get('/cashier', (req, res) => {
 	var user = firebase.auth().currentUser;
 
     if(user){
@@ -290,7 +304,6 @@ app.get('/cashier', (req, res) =>{
         res.redirect('/');
     }
 });
-
 
 app.post('/submitTransaction', (req, res) => {
 	const reqBody = req.body;
@@ -498,7 +511,8 @@ async function recordTransaction(obj) {
     let volunteers = obj.volunteers;
     if (volunteers.length !== 'None') {
         for (let i = 0; i < volunteers.length; i++) {
-            ref = database.ref('/volunteers/list/' + volunteers.id + '/list/' + obj.id);
+            ref = database.ref('/volunteers/list/' + volunteers[i].code +
+                               '/transactions/list/' + obj.id);
             ref.set(obj);
         }
     }
@@ -532,6 +546,27 @@ function addVolunteer(firstName, hours, lastname){
 			lastName: lastName
 		}
 	});
+}
+
+async function logShift(volunteer) {
+    const code = volunteer.code;
+    let ref = database.ref('/volunteers/list/' + code + '/shifts/metadata/newID');
+    let snap = await ref.once('value');
+    const newID = snap.val();
+    volunteer.shift.id = newID;
+
+    ref = database.ref('/volunteers/list/' + code);
+    snap = await ref.once('value');
+    const volunteerObj = snap.val();
+
+    database.ref('/volunteers/list/' + code + '/shifts/list/' + newID)
+            .set(volunteer.shift);
+
+    // update newID
+    ref = database.ref('/volunteers/list/' + code + '/shifts/metadata');
+    ref.update({ newID: (newID + 1) });
+
+    // TODO: update count
 }
 
 function round(value, decimals) {

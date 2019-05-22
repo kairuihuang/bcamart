@@ -25,7 +25,7 @@ html
 								th(class='text-center') Subtract
 								th(class='text-center') Remove
 						tbody(id='cartBody')
-				div(class='col')
+				div(class='col register')
 					div(class='input-group input-group-lg')
 						div(class='input-group-prepend')
 							span(class='input-group-text') Subtotal
@@ -58,7 +58,7 @@ html
 			div(class='modal-dialog' role='document')
 				div(class='modal-content')
 					div(class='modal-header')
-						h4(class='modal-title') Volunteer hours 
+						h4(class='modal-title') Volunteer Hours 
 						button(type='button' class='close' data-dismiss='modal')
 					div(class='modal-body')
 						h6 Volunteers on current shift:
@@ -67,8 +67,8 @@ html
 								label(for='code' class='col-form-label') Enter code:
 								input(type='text' class='form-control' id='volunteerInput' name='code')
 					div(class='modal-footer')
-						button(type='button' class='btn btn-success btn-large' id='clockInBtn') Clock in
-						button(type='button' class='btn btn-info btn-large' id='clockOutBtn') Clock out
+						button(type='submit' form='volunteerInput' class='btn btn-success btn-large' id='clockInBtn') Clock in
+						button(type='submit' form='volunteerInput' class='btn btn-info btn-large' id='clockOutBtn') Clock out
 						button(type='button' class='btn btn-secondary btn-large' id='closeClockModal') Close
 		
 		

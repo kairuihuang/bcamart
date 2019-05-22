@@ -66,12 +66,63 @@ $(document).ready(function(){
             }
         });
 
+        $('#discountBtn').click((event) => {
+            let discountAmount = prompt('Enter discount amount.');
+            if (!isNaN(discountAmount) && discountAmount >= 0.00
+                && discountAmount < 10.00) {
+                discount = Number(Number(discountAmount).toFixed(2));
+                $('#discount').val(discount.toFixed(2));
+                updateTotal();
+            }
+            else {
+                alert('Invalid value entered. Please note that discount cannot exceed $10.00.')
+            }
+        });
+
         $('#clockBtn').click((event) => {
             $('#clockModal').modal('show');
         });
 
         $('#closeClockModal').click((event) => {
             $('#clockModal').modal('hide');
+        });
+
+        $('#clockInBtn').click((event) => {
+            let code = $('#volunteerInput').val();
+            $.get('/getVolunteer/' + code, (data, status) => {
+                if (data === null || data === '') {
+                    alert('Unable to find volunteer with code entered. Please try again.');
+                }
+                else {
+                    let index = findVolunteerIndexByCode(data.code);
+                    if (index !== -1) {
+                        alert(data.firstName + ' ' + data.lastName + ' is already clocked in.');
+                    }
+                    else {
+                        clockInVolunteer(data);
+                        alert(data.firstName + ' has been clocked in. Please remember to clock out at the end of your shift to log your hours.');
+                    }
+                }
+            });
+        });
+
+        $('#clockOutBtn').click((event) => {
+            let code = $('#volunteerInput').val();
+            $.get('/getVolunteer/' + code, (data, status) => {
+                if (data === null || data === '') {
+                    alert('Unable to find volunteer with code entered. Please try again.');
+                }
+                else {
+                    let index = findVolunteerIndexByCode(data.code);
+                    if (index === -1) {
+                        alert('Volunteer entered is not currently clocked in.');
+                    }
+                    else {
+                        clockOutVolunteer(index);
+                        alert(data.firstName + ' ' + data.lastName + ' has been clocked out.');
+                    }
+                }
+            });
         });
     });
 });
@@ -145,6 +196,51 @@ function searchProductByID(list, id) {
 function findProductID(classStr) {
     let arr = classStr.split(' ');
     return Number(arr[(arr.length)-1]);
+}
+
+function clockInVolunteer(obj) {
+    let timestamp = generateTimestamp();
+    let shift = {
+        timeIn: timestamp,
+        hours: 0
+    };
+    volunteers.push({
+        code: obj.code,
+        name: obj.firstName + ' ' + obj.lastName,
+        shift: shift
+    });
+
+    $('#volunteerInput').val('');
+}
+
+function clockOutVolunteer(index) {
+    let volunteer = volunteers[index];
+    let timestamp = generateTimestamp();
+    volunteer.shift.timeOut = timestamp;
+
+    let hourEnd = volunteer.shift.timeOut.hour;
+    let minEnd = volunteer.shift.timeOut.minutes;
+    let hourStart = volunteer.shift.timeIn.hour;
+    let minStart = volunteer.shift.timeIn.minutes;
+
+    if (minStart > minEnd) { minEnd += 60; }
+    if (hourStart > hourEnd) { hourEnd += 24; }
+
+    let hours = (hourEnd - hourStart) + ((minEnd-minStart) / 60);
+
+    let jsonStr = JSON.stringify(volunteer);
+    $.post('/logShift', {jsonStr});
+
+    $('#volunteerInput').val('');
+    volunteers.splice(index, 1);
+}
+
+// if found returns index in volunteers array
+function findVolunteerIndexByCode(code) {
+    for (let i = 0; i < volunteers.length; i++) {
+        if (volunteers[i].code === code) { return i; }
+    }
+    return -1;
 }
 
 function updateSubtotal(price, isAdding) {
@@ -269,7 +365,7 @@ function createVolunteersObj() {
     let list = [];
     for (let i = 0; i < volunteers.length; i++) {
         list[i] = {
-            id: volunteers[i].id,
+            code: volunteers[i].code,
             name: volunteers[i].name
         };
     }
