@@ -187,7 +187,7 @@ app.post('/loginAuth', (req, res) => {
             }
         })
     .catch( function onFailure(err)
-        {res.send("/");});
+        {res.send("/login");});
     });
 
 firebase.auth().onAuthStateChanged(function(user) {

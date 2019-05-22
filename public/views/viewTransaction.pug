@@ -8,13 +8,29 @@ html
 		title View Transaction
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/viewTransaction.css')
+		link(rel="stylesheet" type="text/css"
+		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
 	body
-		h3 View Transaction
-		p(id = 'p1')
+		div(class = 'container')
+			h3 View Transaction
+			table(class='table table-hover table-striped' id = 'vtTable')
+					thead(class = 'thead-dark')
+						tr 
+							th Transaction
+
+					tbody(id = "viewTransactionBody")
+
+
+		
 
 	
 
 	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
 	script(src='/js/bootstrap.min.js')
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js")
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-de.js")
 	script(src='../scripts/viewTransaction.js')
