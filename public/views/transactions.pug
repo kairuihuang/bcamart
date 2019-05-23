@@ -12,17 +12,28 @@ html
 		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
 	body
-		div(class = 'container')
-			h2 Transactions Page
-			table(class='table table-hover table-striped' id='tTable')
-						thead(class = 'thead-dark')
-							tr
-								th Date
-								th Net Total
-								th Discount
-								th Volunteers
-
-						tbody(id = "transactionBody")
+		nav(class='navbar navbar-dark bg-secondary sticky-top')
+			span(class='navbar-brand') BCA Mart Point of Sale
+			ul(class='nav nav-pills justify-content-end')
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/products') Products
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/volunteers') Volunteers
+				li(class='nav-item' style='padding-right: 5px;')
+					a(class='nav-link' href='http://localhost:4000/transactions') Transactions
+				li(class='nav-item')
+					button(class='button btn btn-outline-warning') Logout
+		div(class='container')
+			h1 Transactions
+			div(class='container-fluid border tableDiv')
+				table(class='table table-hover table-striped' id='tTable')
+							thead(class = 'thead-dark')
+								tr
+									th Date
+									th Net Total
+									th Discount
+									th Volunteers
+							tbody(id = 'transactionBody')
 	
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="js/bootstrap.min.js")

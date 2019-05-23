@@ -1,3 +1,11 @@
+.container {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
 tr a, tr a:hover {
 	text-decoration: none;
 	color: black;
@@ -13,4 +21,19 @@ td:hover {
 
 .text {
 	text-align: left;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    color: lightgray;
+}
+
+.tableDiv {
+	padding-top: 10px;
+	padding-bottom: 5px;
+    margin-top: 2%;
 }

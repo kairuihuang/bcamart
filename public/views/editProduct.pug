@@ -8,54 +8,69 @@ html
 		title Edit product
 
 		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/editProduct.css')
+
 
 	body
-		h3 Edit Product
-		
-		form(id='editProductForm' action='/editProductAction' method='POST')
-			div(class='form-group')
-				label(for='name' type='text') Name
-				div(class='input-group')
-					input(class='form-control' id='name-input' name='name' required)
-					div(class='input-group-append')
-						span(class='input-group-text') Display on register
-						div(class='input-group-text')
-							input(class='form-check-input' id='isActiveCheck'
-							      type='checkbox' name='isActive')
+		nav(class='navbar navbar-dark bg-secondary sticky-top')
+			span(class='navbar-brand') BCA Mart Point of Sale
+			ul(class='nav nav-pills justify-content-end')
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/products') Products
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/volunteers') Volunteers
+				li(class='nav-item' style='padding-right: 5px;')
+					a(class='nav-link' href='http://localhost:4000/transactions') Transactions
+				li(class='nav-item')
+					button(class='button btn btn-outline-warning') Logout
+		div(class='container border')
+			h2 Edit Product
 			
-			div(class='form-group')
-				label(for='price' type='number') Price
-				div(class='input-group')
-					div(class='input-group-prepend')
-						span(class='input-group-text') $
-					input(class='form-control' id='price-input' name='price' required)
-			
-			div(class='form-group')
-				label(for='cost' type='number') Cost
-				div(class='input-group')
-					div(class='input-group-prepend')
-						span(class='input-group-text') $
-					input(class='form-control' id='cost-input' name='cost' required)
-			
-			div(class='form-group')
-				label(for='quantity' type='number') Quantity
-				div(class='input-group')
-					input(class='form-control' id='quantity-input' name='quantity' required)
-					div(class='input-group-append')
-						span(class='input-group-text') items
-
-			div(class='form-group') 
-				label(id='depLabel' for='department') Department
-				select(class='form-control' id='department-select' name='department')
-					option(selected='true' disabled) Select
-					option(id='addNew') Add new
-		
-			input(id='productID' name='id' value=id type='hidden')
+			form(id='editProductForm' action='/editProductAction' method='POST')
+				div(class='form-group')
+					label(for='name' type='text') Name
+					div(class='input-group')
+						input(class='form-control' id='name-input' name='name' required)
+						div(class='input-group-append')
+							span(class='input-group-text') Display on register
+							div(class='input-group-text')
+								input(class='form-check-input' id='isActiveCheck'
+								      type='checkbox' name='isActive')
 				
-		a(href='http://localhost:4000/products' class='btn btn-outline-secondary') Back
-		button(id='editBtn' type='submit button' class='btn btn-success'
-		       form='editProductForm') Edit
-		button(id='deleteBtn' type='button' class='btn btn-danger') Delete
+				div(class='form-group')
+					label(for='price' type='number') Price
+					div(class='input-group')
+						div(class='input-group-prepend')
+							span(class='input-group-text') $
+						input(class='form-control' id='price-input' name='price' required)
+				
+				div(class='form-group')
+					label(for='cost' type='number') Cost
+					div(class='input-group')
+						div(class='input-group-prepend')
+							span(class='input-group-text') $
+						input(class='form-control' id='cost-input' name='cost' required)
+				
+				div(class='form-group')
+					label(for='quantity' type='number') Quantity
+					div(class='input-group')
+						input(class='form-control' id='quantity-input' name='quantity' required)
+						div(class='input-group-append')
+							span(class='input-group-text') items
+
+				div(class='form-group') 
+					label(id='depLabel' for='department') Department
+					select(class='form-control' id='department-select' name='department')
+						option(selected='true' disabled) Select
+						option(id='addNew') Add new
+			
+				input(id='productID' name='id' value=id type='hidden')
+			
+			div(class='btn-group')
+				a(href='http://localhost:4000/products' class='btn btn-outline-secondary') Back
+				button(id='editBtn' type='submit button' class='btn btn-success'
+				       form='editProductForm') Edit
+				button(id='deleteBtn' type='button' class='btn btn-danger') Delete
 		
 	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
 	script(src='/js/bootstrap.min.js')

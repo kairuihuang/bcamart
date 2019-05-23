@@ -1,0 +1,22 @@
+.container {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    color: lightgray;
+}
+
+h2 {
+    padding-bottom: 2%;
+}

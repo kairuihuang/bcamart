@@ -1,9 +1,3 @@
-/*div .row {
-	border: 1px solid black;
-	margin: 20px;
-}
-*/
-
 .number {
 	text-align: right;
 }
@@ -56,6 +50,14 @@ div .row {
 }
 
 .register {
-	padding-left: 1px;
+	padding-left: 1%;
 	padding-right: 0px;
+}
+
+#cart tbody {
+	font-size: 1.2em;
+}
+
+#cart thead {
+	font-size: 1.2em;
 }
