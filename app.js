@@ -187,7 +187,7 @@ app.post('/loginAuth', (req, res) => {
             }
         })
     .catch( function onFailure(err)
-        {res.send("/");});
+        {res.send("/login");});
     });
 
 // hey! i'm just a random function passing by (not a route handler)
