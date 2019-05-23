@@ -14,7 +14,7 @@ html
 	body
 		nav(class='navbar navbar-dark bg-secondary sticky-top')
 			span(class='navbar-brand') BCA Mart Point of Sale
-			ul(class='nav nav-pills justify-content-end')
+			ul(class='nav justify-content-end')
 				li(class='nav-item')
 					a(class='nav-link' href='http://localhost:4000/products') Products
 				li(class='nav-item')
@@ -30,8 +30,8 @@ html
 							thead(class = 'thead-dark')
 								tr
 									th Date
-									th Net Total
-									th Discount
+									th(class='number') Net Total
+									th(class='number') Discount
 									th Volunteers
 							tbody(id = 'transactionBody')
 	

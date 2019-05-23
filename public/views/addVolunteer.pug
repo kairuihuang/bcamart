@@ -1,0 +1,50 @@
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		title Add volunteer
+
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/addVolunteer.css')
+
+	body
+		nav(class='navbar navbar-dark bg-secondary sticky-top')
+			span(class='navbar-brand') BCA Mart Point of Sale
+			ul(class='nav justify-content-end')
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/products') Products
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/volunteers') Volunteers
+				li(class='nav-item' style='padding-right: 5px;')
+					a(class='nav-link' href='http://localhost:4000/transactions') Transactions
+				li(class='nav-item')
+					button(class='button btn btn-outline-warning') Logout
+		div(class='container border')
+			h2 Add Volunteer
+
+			form(id='addVolunteerForm' action='/addVolunteerAction' method='POST')
+				div(class='form-group')
+					label(for='first-name' type='text') First Name
+					div(class='input-group')
+						input(class='form-control' id='first-name-input' name='first-name' required)
+							
+				div(class='form-group')
+					label(for='last-ame' type='text') Last Name
+					div(class='input-group')
+						input(class='form-control' id='last-name-input' name='last-name' required)
+
+				div(class='form-group')
+					label(for='email' type='text') Email
+					div(class='input-group')
+						div(class='input-group-prepend')
+						input(class='form-control' id='email-input' name='email' required)
+
+				a(href='http://localhost:4000/volunteers' class='btn btn-outline-secondary') Back
+				button(type='submit button' class='btn btn-success' form='addVolunteerForm') Add
+
+
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script(src='../scripts/addVolunteer.js')

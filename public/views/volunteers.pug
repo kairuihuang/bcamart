@@ -1,126 +1,43 @@
 html
-head
-    title Volunteers
-    link(rel='stylesheet' type='text/css' href='../stylesheets/products.css')
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
 
-style.
-    .container{overflow: hidden}
-    .tab{float: left;}
-    .tab-2{margin-left: 50px}
-    .tab-2 input{display: block;margin-bottom: 10px}
-    tr{transition:all .25s ease-in-out}
-    tr:hover{background-color:#EEE;cursor: pointer} 
+		title Volunteers
 
-body
-div(class = 'container')
-    div(class = 'tab tab-1')
-        table(id = "table" border = "1")
-            thead
-                tr
-                    th(class='text-center') Email
-                    th(class='text-center') First Name
-                    th(class='text-center') Hours
-                    th(class='text-center') Last Name
-            tbody
-    
-    div(class = 'tab tab-2')
-        FirstName: input(type = 'text' name = 'fname' id = 'fname')
-        LastName: input(type = 'text' name = 'lname' id = 'lname')
-        Hours: input(type = 'number' name = 'age' id = 'age')
+		link(rel='stylesheet' href='/css/bootstrap.min.css')
+		link(rel='stylesheet' type='text/css' href='../stylesheets/volunteers.css')
+		link(rel="stylesheet" type="text/css"
+		     href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css")
 
-        button(type ='button' onclick = 'addHtmlTableRow();') Add
-        button(type ='button' onclick = 'editHtmlTbleSelectedRow();') Edit
-        button(type ='button' onclick = 'removeSelectedRow();') Remove
+	body
+		nav(class='navbar navbar-dark bg-secondary sticky-top')
+			span(class='navbar-brand') BCA Mart Point of Sale
+			ul(class='nav justify-content-end')
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/products') Products
+				li(class='nav-item')
+					a(class='nav-link' href='http://localhost:4000/volunteers') Volunteers
+				li(class='nav-item' style='padding-right: 5px;')
+					a(class='nav-link' href='http://localhost:4000/transactions') Transactions
+				li(class='nav-item')
+					button(class='button btn btn-outline-warning') Logout
+		div(class='container')
+			h1 Volunteers
+			a(href='http://localhost:4000/volunteers/addVolunteer' class='btn btn-info btn-lg addBtn') Add Volunteer
+			div(class='container-fluid border tableDiv')
+				table(class='table table-hover table-striped' id='vTable')
+					thead(class='thead-dark')
+						tr
+							th(class='text-left') Name
+							th(class='text-left') Email
+							th(class='text-right') Code
+							th(class='text-right') Hours
+					tbody(id='volunteerBody')
 
-
-script(src="../scripts/volunteers.js")
-script.
-      var rIndex,
-                table = document.getElementById("table");
-            
-            // check the empty input
-            function checkEmptyInput()
-            {
-                var isEmpty = false,
-                    fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
-            
-                if(fname === ""){
-                    alert("First Name Connot Be Empty");
-                    isEmpty = true;
-                }
-                else if(lname === ""){
-                    alert("Last Name Connot Be Empty");
-                    isEmpty = true;
-                }
-                else if(age === ""){
-                    alert("Age Connot Be Empty");
-                    isEmpty = true;
-                }
-                return isEmpty;
-            }
-            
-            // add Row
-            function addHtmlTableRow()
-            {
-                // get the table by id
-                // create a new row and cells
-                // get value from input text
-                // set the values into row cell's
-                if(!checkEmptyInput()){
-                var newRow = table.insertRow(table.length),
-                    cell1 = newRow.insertCell(0),
-                    cell2 = newRow.insertCell(1),
-                    cell3 = newRow.insertCell(2),
-                    fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
-            
-                cell1.innerHTML = fname;
-                cell2.innerHTML = lname;
-                cell3.innerHTML = age;
-                // call the function to set the event to the new row
-                selectedRowToInput();
-            }
-            }
-            
-            // display selected row data into input text
-            function selectedRowToInput()
-            {
-                
-                for(var i = 1; i < table.rows.length; i++)
-                {
-                    table.rows[i].onclick = function()
-                    {
-                      // get the selected row index
-                      rIndex = this.rowIndex;
-                      document.getElementById("fname").value = this.cells[0].innerHTML;
-                      document.getElementById("lname").value = this.cells[1].innerHTML;
-                      document.getElementById("age").value = this.cells[2].innerHTML;
-                    };
-                }
-            }
-            selectedRowToInput();
-            
-            function editHtmlTbleSelectedRow()
-            {
-                var fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
-               if(!checkEmptyInput()){
-                table.rows[rIndex].cells[0].innerHTML = fname;
-                table.rows[rIndex].cells[1].innerHTML = lname;
-                table.rows[rIndex].cells[2].innerHTML = age;
-              }
-            }
-            
-            function removeSelectedRow()
-            {
-                table.deleteRow(rIndex);
-                // clear input text
-                document.getElementById("fname").value = "";
-                document.getElementById("lname").value = "";
-                document.getElementById("age").value = "";
-            }
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+	script(src="/js/bootstrap.min.js")
+	script(type="text/javascript" charset="utf8"
+	       src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js")
+	script(src="../scripts/volunteers.js")

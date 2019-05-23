@@ -1,4 +1,43 @@
-h1: {
-	color: blue;
-	background-color: yellow;
+.container {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    color: lightgray;
+}
+
+tr a, tr a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+td:hover {
+	cursor: pointer;
+}
+
+.number {
+	text-align: right;
+}
+
+.text {
+	text-align: left;
+}
+
+.tableDiv {
+	padding-top: 10px;
+	padding-bottom: 5px;
+    margin-top: 2%;
+}
+
+h1 {
+    margin-bottom: 3%;
 }

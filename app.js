@@ -190,6 +190,7 @@ app.post('/loginAuth', (req, res) => {
         {res.send("/");});
     });
 
+// hey! i'm just a random function passing by (not a route handler)
 firebase.auth().onAuthStateChanged(function(user) {
   if (user != null) {
     console.log("not null");
@@ -279,10 +280,15 @@ app.post('/logShift', (req, res) => {
     res.end();
 });
 
-app.post('/addVolunteer', (req, res) => {
-	console.log(reqBody);
-	const reqBody = req.body;
-	addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
+app.get('/volunteers/addVolunteer', (req, res) => {
+    res.render('addVolunteer');
+});
+
+// TODO: Rewrite
+app.post('/addVolunteerAction', (req, res) => {
+	// console.log(reqBody);
+	// const reqBody = req.body;
+	// addProduct(8, reqBody.name, reqBody.price, reqBody.cost, reqBody.quantity);
 	res.redirect('http://localhost:4000/volunteers');
 });
 
@@ -536,6 +542,7 @@ async function updateInventory(items) {
     }
 }
 
+// TODO: Rewrite
 function addVolunteer(firstName, hours, lastname){
 	database.ref('/volunteers').once('value').then((snap) => {
 		var volunteers = snap.val();

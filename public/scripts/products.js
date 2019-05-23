@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 		$('.productRow').click((event) => {
 			location = baseURL + event.currentTarget.id;
-		})
+		});
 		$('table').DataTable();
 	});
 

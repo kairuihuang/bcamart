@@ -25,8 +25,8 @@ $(document).ready(function(){
 
 				const row = "<tr class = 'transactionRow' id='" + info + "'>\
 						   <td class='text'><a>" + timestamp +
-						  "</a></td><td class='text'><a>" + total +
-						  "</a></td><td class='text'><a>" + discount +
+						  "</a></td><td class='number'><a>" + total +
+						  "</a></td><td class='number'><a>" + discount +
 						  "</a></td><td class='text'><a>" + volunteerStr;
 
 				$("#transactionBody").append(row);

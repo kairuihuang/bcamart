@@ -1,7 +1,7 @@
 .container {
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 20px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 15px;
     padding-bottom: 20px;
     margin-top: 20px;
 }
@@ -36,4 +36,8 @@ td:hover {
 	padding-top: 10px;
 	padding-bottom: 5px;
     margin-top: 2%;
+}
+
+h1 {
+    margin-bottom: 3%;
 }

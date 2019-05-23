@@ -1,18 +1,36 @@
-$(document).ready(function(){
-	$.get("http://localhost:4000/loadVolunteers", (data, status) => {
-		for (var i = 0; i < data.length; i++) {
-			var email = data[i].email
-			var firstName = data[i].firstName
-			var hours = data[i].hours
-			var lastName = data[i].lastName
+$(document).ready(function() {
 
+	const baseURL = 'http://localhost:4000/volunteers/';
 
-			var row = "<tr><td><a href='http://localhost:4000/volunteers/" + i + "'>" + email +
-					  "</a></td><td><a href='http://localhost:4000/volunteers/" + i + "'>" + firstName +
-					  "</a></td><td><a href='http://localhost:4000/volunteers/" + i + "'>" + hours +
-					  "</a></td><td><a href='http://localhost:4000/volunteers/" + i + "'>" + lastName +  "</a></td></tr>";
+	$.get('/loadVolunteers', (data, status) => {
+		console.log(data);
+
+		var codeArr = Object.keys(data);
+
+		for (let i = 0; i < codeArr.length; i++) {
+			let code = codeArr[i];
+
+			let email = data[code].email;
+			let firstName = data[code].firstName;
+			let hours = data[code].hours;
+			let lastName = data[code].lastName;
+
+			let name = firstName + ' ' + lastName;
+			hours = hours.toFixed(1);
+
+			let row =
+				"<tr class='volRow' id='" + code + "'>\
+					<td class='text'>" + name + "</td>\
+					<td class='text'>" + email + "</td>\
+					<td class='number'>" + code + "</td>\
+					<td class='number'>" + hours + "</td>\
+				</tr>";
 
 			$("tbody").append(row);
 		}
+		$('.productRow').click((event) => {
+			location = baseURL + event.currentTarget.id;
+		});
+		$('table').DataTable();
 	});
 });
