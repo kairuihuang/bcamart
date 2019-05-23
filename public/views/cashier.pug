@@ -9,10 +9,13 @@ html
 		link(rel='stylesheet' type='text/css' href='../stylesheets/cashier.css')
 	
 	body
+		nav(class='navbar navbar-dark bg-secondary')
+			span(class='navbar-brand') BCA Mart Point of Sale
+			ul(class='nav justify-content-end')
+				li(class='nav-item')
+					// FIXME: no decoration when hovering over button
+					button(class='button btn btn-outline-warning') Logout
 		div(class='container-fluid')
-			nav(class='navbar navbar-dark bg-secondary')
-				span(class='navbar-brand') BCA Mart Point of Sale
-				button(class='button btn btn-outline-warning') Logout
 			div(class='row')
 				div(class='col-7 prodTableDiv')
 					table(class='table table-striped' id='cart')
