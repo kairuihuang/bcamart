@@ -1,6 +1,5 @@
 # Description
-A basic **point-of-sale system** tailored for use by BCA Mart project team members and volunteer cashiers, inspired by Shopkeep.  
-Served as a high school senior capstone project.
+A basic **point-of-sale system** tailored for use by BCA Mart project team members and volunteer cashiers, inspired by Shopkeep. Served as a high school senior capstone project.
 
 ## Core features
 - Inventory management
