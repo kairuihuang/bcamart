@@ -24,7 +24,7 @@ A basic **point-of-sale system** tailored for use by BCA Mart project team membe
 ## Development Stack
 - Node.js using the Express.js framework
 - Firebase Realtime DB and Auth
-- jQuery + DataTable plugin
+- jQuery + [DataTable](https://datatables.net) plugin
 - PUG template engine
 - Bootstrap
 
