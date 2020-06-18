@@ -24,10 +24,10 @@ A basic **point-of-sale system** tailored for use by BCA Mart project team membe
 - Tabbed item button groups based on department (cashier screen)
 
 ## Images
-![Products Table](/Users/Cary/Desktop/Screenshots/BCA_Mart/products_table.png)
-![Volunteers Table](/Users/Cary/Desktop/Screenshots/BCA_Mart/volunteers_table.png)
-![Transactions Table](/Users/Cary/Desktop/Screenshots/BCA_Mart/transactions_table.png)
-![Cashier Screen](/Users/Cary/Desktop/Screenshots/BCA_Mart/cashier_screen.png)
+![Products Table](./screenshots/products_table.png)
+![Volunteers Table](./screenshots/volunteers_table.png)
+![Transactions Table](./screenshots/transactions_table.png)
+![Cashier Screen](./screenshots/cashier_screen.png)
 
 ## Development Stack
 - Node.js using the Express.js framework
